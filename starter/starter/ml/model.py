@@ -4,13 +4,14 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
+from ml.data import process_data
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 param_grid = { 
-    'n_estimators': [200, 500],
+    'n_estimators': [20, 50],
     'max_features': ['auto', 'sqrt'],
     'max_depth' : [4,5,10],
     'criterion' :['gini', 'entropy']
