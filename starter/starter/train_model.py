@@ -16,6 +16,7 @@ from sklearn.linear_model import LogisticRegression
 from ml.data import process_data
 from ml.model import train_model
 from ml.model import compute_model_metrics
+from ml.model import inference
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -82,24 +83,24 @@ def start_train_pipeline(file_pth, model_artifacts_pth):
     logger.info(f"File read, training process started: {file_pth}")
     
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
-    train, test = train_test_split(df, test_size=0.20)
+    train, val = train_test_split(df, test_size=0.20)
     logger.info(f"Data is split into train and test.")
 
     # Proces the train/test data with the process_data function.
     X_train, y_train, encoder, lb = process_data(
         train, categorical_features=cat_features, label="salary", training=True
     )
-    X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
+    X_val, y_val, _, _ = process_data(
+        val, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
     )
-    logger.info(f"Train {X_train.shape} and test {X_test.shape} data preprocessed with label salary.")
+    logger.info(f"Train {X_train.shape} and test {X_val.shape} data preprocessed with label salary.")
 
     # Train and save a model.
     model, model_type = train_model(X_train, y_train)
     logger.info(f"Model trained.")
 
-    test_preds = model.predict(X_test)
-    precision, recall, fbeta = compute_model_metrics(y_test, test_preds)
+    test_preds = model.predict(X_val)
+    precision, recall, fbeta = compute_model_metrics(y_val, test_preds)
     score = {"name": model_type, "precision": precision, "recall": recall, "fbeta": fbeta}
     logger.info(f"Metrics: {score}")
 
@@ -116,8 +117,8 @@ if __name__ == "__main__":
         model, encoder, lb, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
         
         #model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
-        X = pd.read_csv("./data/test_cleaned_census.csv")
-        inference(model, encoder, lb, X, cat_features, 'salary')
+        X = pd.read_csv("./data/test_cleaned_census.csv", index_col=False)
+        preds, act = inference(model, encoder, lb, X, cat_features, 'salary')
 
     except (Exception) as error:
         print("main error: %s", error)

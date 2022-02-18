@@ -22,7 +22,7 @@ def remove_duplicates(file_pth):
         df.reset_index(drop=True, inplace=True)
         logger.info("Dropped duplicates...")
         cleaned_pth = str(file_dir+'/cleaned_'+file_name)
-        df.to_csv(cleaned_pth)
+        df.to_csv(cleaned_pth, index=False)
         logger.info(f"Saved to: {cleaned_pth}")
 
 if __name__ == "__main__":

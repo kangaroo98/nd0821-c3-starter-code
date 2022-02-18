@@ -31,7 +31,7 @@ def segregate(artifact_pth, test_size=0.2, random_state=42):
         # Set the path on disk 
         data_pth = str(split_name + '_' + file_name)
         temp_path = os.path.join(file_dir, data_pth)
-        split.to_csv(temp_path)
+        split.to_csv(temp_path, index=False)
         logger.info(f"Saved {split_name} dataset wiht shape {split.shape} to {temp_path}")
 
 
