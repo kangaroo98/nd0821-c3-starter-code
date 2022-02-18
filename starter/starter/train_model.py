@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
+from ml.data import cat_features
 from ml.data import process_data
 from ml.data import save_model_artifacts
 from ml.model import train_model
@@ -19,26 +20,6 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
-
-cat_features = [
-    "workclass",
-    "education",
-    "marital-status",
-    "occupation",
-    "relationship",
-    "race",
-    "sex",
-    "native-country",
-]
-
-num_features = [
-    "age",
-    "fnlgt",
-    "education-num",
-    "capital-gain",
-    "capital-loss",  
-    "hours-per-week",
-]
 
 
 def start_train_pipeline(file_pth):

@@ -28,3 +28,13 @@ stages:
     metrics:
       - model/score.json:
           cache: false
+  inference:
+    cmd: python starter/inference.py
+    deps:
+      - starter/inference.py
+      - starter/ml/data.py
+      - starter/ml/model.py
+      - data/test_cleaned_census.csv
+      - model/model.pkl
+      - model/encoder.pkl
+      - model/lb.pkl

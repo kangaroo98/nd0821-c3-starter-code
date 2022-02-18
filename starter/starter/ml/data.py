@@ -11,6 +11,28 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
+
+num_features = [
+    "age",
+    "fnlgt",
+    "education-num",
+    "capital-gain",
+    "capital-loss",  
+    "hours-per-week",
+]
+
+
+
 def save_model_artifacts(file_dir, model, encoder, lb, score):
 
     # save the model and the OneHot encoder

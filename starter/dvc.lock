@@ -20,14 +20,14 @@ stages:
       md5: 779f5f83ac43afed7caaa9f25627a114
       size: 2811824
     - path: starter/ml/data.py
-      md5: b17e823c240f327dc8c1a4b1389a25aa
-      size: 4167
+      md5: 953d9f319ea81adc14bdf6194e3561db
+      size: 4457
     - path: starter/ml/model.py
       md5: 6049d427e20328f2fe0f524bbea4ba8a
       size: 2620
     - path: starter/train_model.py
-      md5: 0e4569deba0734d57862bb14c0e1a916
-      size: 2530
+      md5: 25a04bef8ff8a08c7205f9f6711da242
+      size: 2275
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
@@ -36,11 +36,11 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: 12c34680657454ab50c41771d9ab6bc6
-      size: 1655099
+      md5: d458d48fadc49363ce10c5c816c11d3e
+      size: 1817382
     - path: model/score.json
-      md5: 0c95533f7a22bddd97e8bb2d331fcb49
-      size: 126
+      md5: 4249428b5973f7118e9f1bb779da2330
+      size: 125
   segregate_data:
     cmd: python starter/segregate.py
     deps:
@@ -57,3 +57,27 @@ stages:
     - path: data/train_cleaned_census.csv
       md5: 779f5f83ac43afed7caaa9f25627a114
       size: 2811824
+  inference:
+    cmd: python starter/inference.py
+    deps:
+    - path: data/test_cleaned_census.csv
+      md5: 7785dbfd0af63fe8d42bc9c30e673eff
+      size: 704314
+    - path: model/encoder.pkl
+      md5: a553f204feb7d25cff7013915fd7ce8a
+      size: 3898
+    - path: model/lb.pkl
+      md5: a553f204feb7d25cff7013915fd7ce8a
+      size: 3898
+    - path: model/model.pkl
+      md5: d458d48fadc49363ce10c5c816c11d3e
+      size: 1817382
+    - path: starter/inference.py
+      md5: 181b4a514eb3e831e5cb5b72a12097f5
+      size: 1246
+    - path: starter/ml/data.py
+      md5: 953d9f319ea81adc14bdf6194e3561db
+      size: 4457
+    - path: starter/ml/model.py
+      md5: 6049d427e20328f2fe0f524bbea4ba8a
+      size: 2620
