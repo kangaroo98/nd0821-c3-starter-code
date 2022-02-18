@@ -16,27 +16,30 @@ stages:
   train_model:
     cmd: python starter/train_model.py
     deps:
-    - path: data/cleaned_census.csv
-      md5: 864f768c94aa0cdf64cc58281cac4835
-      size: 3515983
+    - path: data/train_cleaned_census.csv
+      md5: 779f5f83ac43afed7caaa9f25627a114
+      size: 2811824
     - path: starter/ml/data.py
-      md5: efdfccc49d97f2349e8b895c79e874d4
-      size: 2808
+      md5: b17e823c240f327dc8c1a4b1389a25aa
+      size: 4167
     - path: starter/ml/model.py
       md5: 6049d427e20328f2fe0f524bbea4ba8a
       size: 2620
     - path: starter/train_model.py
-      md5: c450f636b27c6de155e6d6ed8de6ad3f
-      size: 4050
+      md5: 0e4569deba0734d57862bb14c0e1a916
+      size: 2530
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
+    - path: model/lb.pkl
+      md5: a553f204feb7d25cff7013915fd7ce8a
+      size: 3898
     - path: model/model.pkl
-      md5: 16e32963620b4c8fe4f2e4fa10b149c4
-      size: 687908
+      md5: 12c34680657454ab50c41771d9ab6bc6
+      size: 1655099
     - path: model/score.json
-      md5: 4f8578e5f2d660ff27e2828b2a522664
+      md5: 0c95533f7a22bddd97e8bb2d331fcb49
       size: 126
   segregate_data:
     cmd: python starter/segregate.py

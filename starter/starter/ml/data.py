@@ -1,10 +1,51 @@
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+import os
+import joblib
+from matplotlib.font_manager import json_dump, json_load
+
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
+
+def save_model_artifacts(file_dir, model, encoder, lb, score):
+
+    # save the model and the OneHot encoder
+    model_pth = str(file_dir + '/' + 'model.pkl')
+    encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    lb_pth = str(file_dir + '/' + 'lb.pkl')
+    score_pth = str(file_dir + '/' + 'score.json')
+
+    if os.path.exists(file_dir):
+        joblib.dump(model, model_pth)
+        joblib.dump(encoder, encoder_pth)
+        joblib.dump(encoder, lb_pth)
+        json_dump(score, score_pth)
+    else:
+        logger.error("Failed to save the model, encoders or metrics. Filepath incorrect!")
+
+
+def load_model_artifacts(file_dir):
+
+    # load model and encoder
+    model_pth = str(file_dir + '/' + 'model.pkl')
+    encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    lb_pth = str(file_dir + '/' + 'lb.pkl')
+    score_pth = str(file_dir + '/' + 'score.json')
+
+    if os.path.exists(file_dir):
+        model = joblib.load(model_pth)
+        encoder = joblib.load(encoder_pth)
+        lb = joblib.load(lb_pth)
+        score = json_load(score_pth)
+        logger.info(f"Model, encoders and metrics loaded from directory {file_dir}")
+    else:
+        logger.error("Failed to load the model, encoders or metrics. Filepath incorrect!")
+
+    return model, encoder, lb, score
 
 
 def process_data(
@@ -77,3 +118,6 @@ def process_data(
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb
+
+
+

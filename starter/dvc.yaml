@@ -20,10 +20,11 @@ stages:
       - starter/train_model.py
       - starter/ml/data.py
       - starter/ml/model.py
-      - data/cleaned_census.csv
+      - data/train_cleaned_census.csv
     outs:
       - model/model.pkl
       - model/encoder.pkl
+      - model/lb.pkl
     metrics:
       - model/score.json:
           cache: false
