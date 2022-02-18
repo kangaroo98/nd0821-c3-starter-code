@@ -23,21 +23,21 @@ stages:
       md5: efdfccc49d97f2349e8b895c79e874d4
       size: 2808
     - path: starter/ml/model.py
-      md5: d97e85673f70f9ccd9bc6b60a091eef4
-      size: 2489
+      md5: d45bc7f4977db67315b33361a126aa51
+      size: 2589
     - path: starter/train_model.py
-      md5: ce74cd8e05ecfbc9f0be5adf219f1228
-      size: 3754
+      md5: 00b6554d69297977087ab090852dbbc0
+      size: 3855
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: 4629ec3403fa3def65dbb77041b339b7
-      size: 2168881
+      md5: 2f8396de6f8fafbc64d88b107b51b88d
+      size: 19492429
     - path: model/score.json
-      md5: 2ae52f5dd1dfcc22130774162da45941
-      size: 127
+      md5: a48e1b51d3bfa7c4c9a9a05c50d3a6a4
+      size: 126
   segregate_data:
     cmd: python starter/segregate.py
     deps:

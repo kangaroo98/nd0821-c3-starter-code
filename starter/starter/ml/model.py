@@ -12,7 +12,7 @@ logger = logging.getLogger()
 param_grid = { 
     'n_estimators': [200, 500],
     'max_features': ['auto', 'sqrt'],
-    'max_depth' : [4,5,1],
+    'max_depth' : [4,5,10],
     'criterion' :['gini', 'entropy']
 }
 
@@ -68,7 +68,7 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def inference(model, encoder, X):
+def inference(model, encoder, lb, X, cat_features, label):
     """ Run model inferences and return the predictions.
 
     Inputs
@@ -82,14 +82,11 @@ def inference(model, encoder, X):
     preds : np.array
         Predictions from the model.
     """
-    logger.info(f"Model input data: {X}")
-
     # Preprocess and predict
-    X_processed, _, _, _ = process_data(
-        X, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
-    )
-    preds = model.predict(X_processed)
-    logger.info(f"Predicted: Salaray prediction: {preds}")
+    X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
+                                    label=label, training=False, encoder=encoder, lb=lb)
+    predictions = model.predict(X_trained_columns)
+    logger.info(f"Predicted: Salaray prediction: {predictions} Actual results: {y_actual_results}")
 
-    return preds 
+    return predictions, y_actual_results 
 

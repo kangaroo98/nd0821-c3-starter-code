@@ -107,16 +107,17 @@ def start_train_pipeline(file_pth, model_artifacts_pth):
     save_model_artifacts(model_artifacts_pth, model, encoder, score)
     logger.info(f"Model, encoder and score saved to: {model_artifacts_pth}")
 
-    return model, encoder, score
+    return model, encoder, lb, score
 
 
 if __name__ == "__main__":
 
     try:
-        model, encoder, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
+        model, encoder, lb, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
         
         #model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
-        # inference(model, X)
+        X = pd.read_csv("./data/test_cleaned_census.csv")
+        inference(model, encoder, lb, X, cat_features, 'salary')
 
     except (Exception) as error:
         print("main error: %s", error)
