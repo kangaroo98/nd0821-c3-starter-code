@@ -38,3 +38,19 @@ stages:
     - path: model/score.json
       md5: 59531eec3296f6f94e30cb312570dfdf
       size: 125
+  segregate_data:
+    cmd: python starter/segregate.py
+    deps:
+    - path: data/cleaned_census.csv
+      md5: 26fe782a9c253641e0b50a4207eed5da
+      size: 3700096
+    - path: starter/segregate.py
+      md5: 08b1a281c3454fd34a4b8c22643b5eef
+      size: 1373
+    outs:
+    - path: data/test_cleaned_census.csv
+      md5: 337c23df7270a5042c0b38f86d044184
+      size: 778052
+    - path: data/train_cleaned_census.csv
+      md5: 758256915fa6a808851f4eb2ca8c6747
+      size: 3106334
