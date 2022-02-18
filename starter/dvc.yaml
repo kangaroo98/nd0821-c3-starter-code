@@ -6,6 +6,14 @@ stages:
       - data/census.csv
     outs:
       - data/cleaned_census.csv
+  segregate_data:
+    cmd: python starter/segregate.py
+    deps:
+      - starter/segregate.py
+      - data/cleaned_census.csv
+    outs:
+      - data/train_cleaned_census.csv
+      - data/test_cleaned_census.csv
   train_model:
     cmd: python starter/train_model.py
     deps:
