@@ -16,6 +16,11 @@ stages:
       - data/test_cleaned_census.csv
   train_model:
     cmd: python starter/train_model.py
+    params:
+      - train_model.n_estimators
+      - train_model.max_features
+      - train_model.max_depth
+      - train_model.criterion
     deps:
       - starter/train_model.py
       - starter/ml/data.py

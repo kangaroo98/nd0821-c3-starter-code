@@ -28,6 +28,21 @@ stages:
     - path: starter/train_model.py
       md5: 25a04bef8ff8a08c7205f9f6711da242
       size: 2275
+    params:
+      params.yaml:
+        train_model.criterion:
+        - gini
+        - entropy
+        train_model.max_depth:
+        - 4
+        - 5
+        - 10
+        train_model.max_features:
+        - auto
+        - sqrt
+        train_model.n_estimators:
+        - 20
+        - 50
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
@@ -36,11 +51,11 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: d458d48fadc49363ce10c5c816c11d3e
-      size: 1817382
+      md5: 6721a31860329ff3b1c78612f3b9283b
+      size: 1807302
     - path: model/score.json
-      md5: 4249428b5973f7118e9f1bb779da2330
-      size: 125
+      md5: feecb381fa2590c32d2d7866c0f486cd
+      size: 124
   segregate_data:
     cmd: python starter/segregate.py
     deps:
@@ -70,8 +85,8 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: d458d48fadc49363ce10c5c816c11d3e
-      size: 1817382
+      md5: 6721a31860329ff3b1c78612f3b9283b
+      size: 1807302
     - path: starter/inference.py
       md5: 181b4a514eb3e831e5cb5b72a12097f5
       size: 1246
