@@ -38,7 +38,7 @@ def train_model(X_train, y_train):
     cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
     cv_rfc.fit(X_train, y_train)
     
-    return cv_rfc.best_estimator_, str("RainForest")
+    return cv_rfc.best_estimator_, str("RandomForest")
 
 
 def compute_model_metrics(y, preds):
@@ -63,7 +63,7 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def inference(model, X):
+def inference(model, encoder, X):
     """ Run model inferences and return the predictions.
 
     Inputs
@@ -77,4 +77,14 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    logger.info(f"Model input data: {X}")
+
+    # Preprocess and predict
+    X_processed, _, _, _ = process_data(
+        X, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
+    )
+    preds = model.predict(X_processed)
+    logger.info(f"Predicted: Salaray prediction: {preds}")
+
+    return preds 
+

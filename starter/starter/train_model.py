@@ -115,7 +115,7 @@ if __name__ == "__main__":
     try:
         model, encoder, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
         
-        # model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
+        #model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
         # inference(model, X)
 
     except (Exception) as error:

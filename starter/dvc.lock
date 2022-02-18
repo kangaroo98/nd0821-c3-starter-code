@@ -1,14 +1,14 @@
 schema: '2.0'
 stages:
   clean_data:
-    cmd: python clean_data.py
+    cmd: python starter/clean_data.py
     deps:
-    - path: clean_data.py
-      md5: 10413927b20425e10f169b2f4ec3b1ed
-      size: 887
     - path: data/census.csv
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
+    - path: starter/clean_data.py
+      md5: 10413927b20425e10f169b2f4ec3b1ed
+      size: 887
     outs:
     - path: data/cleaned_census.csv
       md5: 26fe782a9c253641e0b50a4207eed5da
@@ -23,18 +23,18 @@ stages:
       md5: efdfccc49d97f2349e8b895c79e874d4
       size: 2808
     - path: starter/ml/model.py
-      md5: b97a4d36d1cc0a1e474c089c7a382759
-      size: 2027
+      md5: 4be98dbfc1527ca8ee49cf1207e6b676
+      size: 2367
     - path: starter/train_model.py
-      md5: 40c0316eb95afd13fb0efaa2129b0beb
-      size: 3755
+      md5: ce74cd8e05ecfbc9f0be5adf219f1228
+      size: 3754
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: eec91c07f34bd15bc120819babba3a09
-      size: 19455997
+      md5: 053a060ed9e5159406baa9ec8e2907c8
+      size: 19451677
     - path: model/score.json
-      md5: 4c8570e447e30f472d0f33e84ff62474
-      size: 124
+      md5: 59531eec3296f6f94e30cb312570dfdf
+      size: 125
