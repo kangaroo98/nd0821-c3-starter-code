@@ -43,40 +43,44 @@ num_features = [
 ]
 
 
-def save_model_artifacts(file_dir, model, encoder, score):
+def save_model_artifacts(file_dir, model, encoder, lb, score):
 
     # save the model and the OneHot encoder
     model_pth = str(file_dir + '/' + 'model.pkl')
     encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    lb_pth = str(file_dir + '/' + 'lb.pkl')
     score_pth = str(file_dir + '/' + 'score.json')
 
     if os.path.exists(file_dir):
         joblib.dump(model, model_pth)
         joblib.dump(encoder, encoder_pth)
+        joblib.dump(encoder, lb_pth)
         json_dump(score, score_pth)
     else:
-        logger.error("Failed to save the model and encoder. Filepath incorrect!")
+        logger.error("Failed to save the model, encoders or metrics. Filepath incorrect!")
 
 
-def load_model_artifacts(file_dir, name):
+def load_model_artifacts(file_dir):
 
     # load model and encoder
     model_pth = str(file_dir + '/' + 'model.pkl')
     encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    lb_pth = str(file_dir + '/' + 'lb.pkl')
     score_pth = str(file_dir + '/' + 'score.json')
 
     if os.path.exists(file_dir):
         model = joblib.load(model_pth)
         encoder = joblib.load(encoder_pth)
+        lb = joblib.load(lb_pth)
         score = json_load(score_pth)
-        logger.info(f"Model and encoder loaded from directory {file_dir} ({name})")
+        logger.info(f"Model, encoders and metrics loaded from directory {file_dir}")
     else:
-        logger.error("Failed to load the model or encoder. Filepath incorrect!")
+        logger.error("Failed to load the model, encoders or metrics. Filepath incorrect!")
 
-    return model, encoder, score
+    return model, encoder, lb, score
 
 
-def start_train_pipeline(file_pth, model_artifacts_pth):
+def start_train_pipeline(file_pth):
 
     # Add code to load in the data.
     df = pd.read_csv(file_pth)
@@ -104,20 +108,21 @@ def start_train_pipeline(file_pth, model_artifacts_pth):
     score = {"name": model_type, "precision": precision, "recall": recall, "fbeta": fbeta}
     logger.info(f"Metrics: {score}")
 
-    # save model artifacts
-    save_model_artifacts(model_artifacts_pth, model, encoder, score)
-    logger.info(f"Model, encoder and score saved to: {model_artifacts_pth}")
-
     return model, encoder, lb, score
 
 
 if __name__ == "__main__":
 
     try:
-        model, encoder, lb, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
+        # train model
+        model, encoder, lb, score = start_train_pipeline("./data/train_cleaned_census.csv")
+
+        # save model artifacts
+        save_model_artifacts("./model", model, encoder, lb, score)
+        logger.info(f"Model, encoder and score saved to: './model'")
         
-        #model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
-        X = pd.read_csv("./data/test_cleaned_census.csv", index_col=False)
+        #model, encoder, lb, score = load_model_artifacts("./model")
+        X = pd.read_csv("./data/test_cleaned_census.csv")
         preds, act = inference(model, encoder, lb, X, cat_features, 'salary')
 
     except (Exception) as error:
