@@ -4,18 +4,15 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
+import yaml
+from yaml import CLoader as Loader
+
 from ml.data import process_data
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-param_grid = { 
-    'n_estimators': [20, 50],
-    'max_features': ['auto', 'sqrt'],
-    'max_depth' : [4,5,10],
-    'criterion' :['gini', 'entropy']
-}
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -39,9 +36,14 @@ def train_model(X_train, y_train):
 
     # return lrc, str("LogisticRegression")
 
+    # read model parameter
+    with open("./params.yaml", "rb") as f:
+        params = yaml.load(f, Loader=Loader)
+    logger.info(f"Yaml Parameters: {params}")    
+
     # random forest
-    rfc = RandomForestClassifier(random_state=42)
-    cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
+    rfc = RandomForestClassifier(random_state=params['train_model']['random_state'])
+    cv_rfc = GridSearchCV(estimator=rfc, param_grid=params['train_model']['param_grid'], cv=5)
     cv_rfc.fit(X_train, y_train)
     
     return cv_rfc.best_estimator_, str("RandomForest")

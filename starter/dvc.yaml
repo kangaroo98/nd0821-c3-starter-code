@@ -17,10 +17,8 @@ stages:
   train_model:
     cmd: python starter/train_model.py
     params:
-      - train_model.n_estimators
-      - train_model.max_features
-      - train_model.max_depth
-      - train_model.criterion
+      - train_model.random_state
+      - train_model.param_grid
     deps:
       - starter/train_model.py
       - starter/ml/data.py

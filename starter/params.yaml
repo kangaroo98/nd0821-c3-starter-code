@@ -1,5 +1,7 @@
 train_model:
-  n_estimators: [20, 50]
-  max_features: ["auto", "sqrt"]
-  max_depth: [4, 5, 10]
-  criterion: ["gini", "entropy"]
+  random_state: 42
+  param_grid:
+    n_estimators: [2, 5]
+    max_features: ["auto", "sqrt"]
+    max_depth: [4, 5, 10]
+    criterion: ["gini", "entropy"]

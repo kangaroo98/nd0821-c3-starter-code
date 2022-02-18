@@ -23,26 +23,28 @@ stages:
       md5: 953d9f319ea81adc14bdf6194e3561db
       size: 4457
     - path: starter/ml/model.py
-      md5: 6049d427e20328f2fe0f524bbea4ba8a
-      size: 2620
+      md5: ff3320807d84a247ab4b5bb5e871cf1c
+      size: 2743
     - path: starter/train_model.py
       md5: 25a04bef8ff8a08c7205f9f6711da242
       size: 2275
     params:
       params.yaml:
-        train_model.criterion:
-        - gini
-        - entropy
-        train_model.max_depth:
-        - 4
-        - 5
-        - 10
-        train_model.max_features:
-        - auto
-        - sqrt
-        train_model.n_estimators:
-        - 20
-        - 50
+        train_model.param_grid:
+          n_estimators:
+          - 2
+          - 5
+          max_features:
+          - auto
+          - sqrt
+          max_depth:
+          - 4
+          - 5
+          - 10
+          criterion:
+          - gini
+          - entropy
+        train_model.random_state: 42
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
@@ -51,11 +53,11 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: 6721a31860329ff3b1c78612f3b9283b
-      size: 1807302
+      md5: 65831e9c9a0b3e641fdaac933053157c
+      size: 214172
     - path: model/score.json
-      md5: feecb381fa2590c32d2d7866c0f486cd
-      size: 124
+      md5: 673ae7e19f46a1dd16c69880fd1f523e
+      size: 127
   segregate_data:
     cmd: python starter/segregate.py
     deps:
@@ -85,8 +87,8 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: 6721a31860329ff3b1c78612f3b9283b
-      size: 1807302
+      md5: 65831e9c9a0b3e641fdaac933053157c
+      size: 214172
     - path: starter/inference.py
       md5: 181b4a514eb3e831e5cb5b72a12097f5
       size: 1246
@@ -94,5 +96,5 @@ stages:
       md5: 953d9f319ea81adc14bdf6194e3561db
       size: 4457
     - path: starter/ml/model.py
-      md5: 6049d427e20328f2fe0f524bbea4ba8a
-      size: 2620
+      md5: ff3320807d84a247ab4b5bb5e871cf1c
+      size: 2743
