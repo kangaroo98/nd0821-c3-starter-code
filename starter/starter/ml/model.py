@@ -39,7 +39,7 @@ def train_model(X_train, y_train):
     # read model parameter
     with open("./params.yaml", "rb") as f:
         params = yaml.load(f, Loader=Loader)
-    logger.info(f"Yaml Parameters: {params}")    
+    logger.info(f"DVC params.yaml: {params}")    
 
     # random forest
     rfc = RandomForestClassifier(random_state=params['train_model']['random_state'])
@@ -85,9 +85,14 @@ def inference(model, encoder, lb, X, cat_features, label):
     preds : np.array
         Predictions from the model.
     """
-    # Preprocess and predict
+    logger.info(f"Inference input dataset X: ({X.shape})")
+
+    # preprocess and predict
     X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
                                     label=label, training=False, encoder=encoder, lb=lb)
+    logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
+
+    # predict 
     predictions = model.predict(X_trained_columns)
     logger.info(f"Predicted: Salaray prediction: {predictions} Actual results: {y_actual_results}")
 

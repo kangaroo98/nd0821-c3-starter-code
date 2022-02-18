@@ -7,8 +7,8 @@ stages:
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     - path: starter/clean_data.py
-      md5: 7423261f8163bb739341bebf43acadab
-      size: 900
+      md5: 725c8a0be18a5d5791893d8d97e244be
+      size: 979
     outs:
     - path: data/cleaned_census.csv
       md5: 864f768c94aa0cdf64cc58281cac4835
@@ -20,14 +20,14 @@ stages:
       md5: 779f5f83ac43afed7caaa9f25627a114
       size: 2811824
     - path: starter/ml/data.py
-      md5: 953d9f319ea81adc14bdf6194e3561db
-      size: 4457
+      md5: 24b2265e1f1de7cea8bf5a3c41a0b24f
+      size: 4846
     - path: starter/ml/model.py
-      md5: ff3320807d84a247ab4b5bb5e871cf1c
-      size: 2743
+      md5: 5cfe1d5dc9e5cd938523fc99a1173a92
+      size: 2932
     - path: starter/train_model.py
-      md5: 25a04bef8ff8a08c7205f9f6711da242
-      size: 2275
+      md5: 1d38942f72712bdd101c92ef2a5f8140
+      size: 2271
     params:
       params.yaml:
         train_model.param_grid:
@@ -50,14 +50,14 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/lb.pkl
-      md5: a553f204feb7d25cff7013915fd7ce8a
-      size: 3898
+      md5: 68d67643c2f11e180eaa335146ade2ea
+      size: 403
     - path: model/model.pkl
-      md5: 65831e9c9a0b3e641fdaac933053157c
-      size: 214172
+      md5: 6a722ffc8b621ff642c631dcf15929c6
+      size: 214604
     - path: model/score.json
-      md5: 673ae7e19f46a1dd16c69880fd1f523e
-      size: 127
+      md5: 2b4d44022f620de33e5020619d16c076
+      size: 112
   segregate_data:
     cmd: python starter/segregate.py
     deps:
@@ -87,14 +87,38 @@ stages:
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: 65831e9c9a0b3e641fdaac933053157c
-      size: 214172
+      md5: c0803e41195ee1548140147d3dbb31f9
+      size: 7252685
     - path: starter/inference.py
-      md5: 181b4a514eb3e831e5cb5b72a12097f5
-      size: 1246
+      md5: d73904a4060ed30ff97c8d5316a19544
+      size: 1438
     - path: starter/ml/data.py
       md5: 953d9f319ea81adc14bdf6194e3561db
       size: 4457
     - path: starter/ml/model.py
       md5: ff3320807d84a247ab4b5bb5e871cf1c
       size: 2743
+  evaluate:
+    cmd: python starter/evaluate.py
+    deps:
+    - path: data/test_cleaned_census.csv
+      md5: 7785dbfd0af63fe8d42bc9c30e673eff
+      size: 704314
+    - path: model/encoder.pkl
+      md5: a553f204feb7d25cff7013915fd7ce8a
+      size: 3898
+    - path: model/lb.pkl
+      md5: 68d67643c2f11e180eaa335146ade2ea
+      size: 403
+    - path: model/model.pkl
+      md5: 6a722ffc8b621ff642c631dcf15929c6
+      size: 214604
+    - path: starter/evaluate.py
+      md5: 925f59a0361f1ef9356a542b9b7f6cf4
+      size: 1555
+    - path: starter/ml/data.py
+      md5: 24b2265e1f1de7cea8bf5a3c41a0b24f
+      size: 4846
+    - path: starter/ml/model.py
+      md5: 5cfe1d5dc9e5cd938523fc99a1173a92
+      size: 2932

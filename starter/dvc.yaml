@@ -31,10 +31,10 @@ stages:
     metrics:
       - model/score.json:
           cache: false
-  inference:
-    cmd: python starter/inference.py
+  evaluate:
+    cmd: python starter/evaluate.py
     deps:
-      - starter/inference.py
+      - starter/evaluate.py
       - starter/ml/data.py
       - starter/ml/model.py
       - data/test_cleaned_census.csv

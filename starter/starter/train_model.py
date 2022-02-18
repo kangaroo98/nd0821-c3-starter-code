@@ -22,12 +22,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
-def start_train_pipeline(file_pth):
+def start_train_pipeline(df):
 
-    # Add code to load in the data.
-    df = pd.read_csv(file_pth)
-    logger.info(f"File read, training process started: {file_pth}")
-    
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
     train, val = train_test_split(df, test_size=0.20)
     logger.info(f"Data is split into train and test.")
@@ -47,17 +43,21 @@ def start_train_pipeline(file_pth):
 
     test_preds = model.predict(X_val)
     precision, recall, fbeta = compute_model_metrics(y_val, test_preds)
-    score = {"name": model_type, "precision": precision, "recall": recall, "fbeta": fbeta}
-    logger.info(f"Metrics: {score}")
+    val_score = {"name": model_type, "precision": precision, "recall": recall, "fbeta": fbeta}
+    logger.info(f"Metrics: {val_score}")
 
-    return model, encoder, lb, score
+    return model, encoder, lb, val_score
 
 
 if __name__ == "__main__":
 
     try:
+        # Add code to load in the data.
+        df = pd.read_csv("./data/train_cleaned_census.csv")
+        logger.info(f"Train dataset read ({df.shape})")
+    
         # train model
-        model, encoder, lb, score = start_train_pipeline("./data/train_cleaned_census.csv")
+        model, encoder, lb, score = start_train_pipeline(df)
 
         # save model artifacts
         save_model_artifacts("./model", model, encoder, lb, score)

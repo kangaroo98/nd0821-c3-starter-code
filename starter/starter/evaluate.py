@@ -24,13 +24,16 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
-def inference(file_pth, X):
-    
-    # load model artifacts
-    model, encoder, lb, score = load_model_artifacts(file_pth)
+def evaluate(model, encoder, lb, score, X):
+
+    logger.info(f"Test dataset: {X}")
+
     preds, acts = inference(model, encoder, lb, X, cat_features, 'salary')
-    
     logger.info(f"Prediction: {preds} vs. Actual Values: {acts}")
+
+    precision, recall, fbeta = compute_model_metrics(acts, preds)
+    test_score = {"name": score["name"], "precision": precision, "recall": recall, "fbeta": fbeta}
+    logger.info(f"Test metrics: {test_score}")
 
     # tbd - visualise
 
@@ -38,11 +41,14 @@ def inference(file_pth, X):
 if __name__ == "__main__":
 
     try:
-        # load test data
-        X = pd.read_csv("./data/test_cleaned_census.csv")
 
-        # model inference 
-        inference("./model", X)
+        # load model artifacts
+        model, encoder, lb, score = load_model_artifacts("./model")
+        X = pd.read_csv("./data/test_cleaned_census.csv")
+        logger.info(f"Test dataset ({X.shape})")
+
+        # model evaluation 
+        evaluate(model, encoder, lb, score, X)
 
     except (Exception) as error:
         print("main error: %s", error)

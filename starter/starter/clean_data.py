@@ -16,6 +16,7 @@ def remove_duplicates(file_pth):
     # Add code to load in the data.
     file_dir, file_name = os.path.split(file_pth)
     df = pd.read_csv(file_pth, sep = '\s*,\s*', engine = 'python')
+    logger.info(f"Read raw dataset ({df.shape})")
 
     if (df.duplicated().any()):
         df.drop_duplicates(keep='first', inplace=True)
@@ -23,7 +24,7 @@ def remove_duplicates(file_pth):
         logger.info("Dropped duplicates...")
         cleaned_pth = str(file_dir+'/cleaned_'+file_name)
         df.to_csv(cleaned_pth, index=False)
-        logger.info(f"Saved to: {cleaned_pth}")
+        logger.info(f"Saved cleaned dataset ({df.shape}) to: {cleaned_pth}")
 
 if __name__ == "__main__":
     try:

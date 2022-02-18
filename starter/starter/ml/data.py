@@ -44,7 +44,7 @@ def save_model_artifacts(file_dir, model, encoder, lb, score):
     if os.path.exists(file_dir):
         joblib.dump(model, model_pth)
         joblib.dump(encoder, encoder_pth)
-        joblib.dump(encoder, lb_pth)
+        joblib.dump(lb, lb_pth)
         json_dump(score, score_pth)
     else:
         logger.error("Failed to save the model, encoders or metrics. Filepath incorrect!")
@@ -71,7 +71,7 @@ def load_model_artifacts(file_dir):
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    dataset, categorical_features=[], label=None, training=True, encoder=None, lb=None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -112,34 +112,38 @@ def process_data(
         passed in.
     """
 
-    logger.info(f"Dataset shape: {X.shape}")
+    logger.info(f"Dataset shape: {dataset.shape}")
 
     if label is not None:
-        y = X[label]
-        X = X.drop([label], axis=1)
+        labels = dataset[label]
+        features = dataset.drop([label], axis=1)
     else:
-        y = np.array([])
+        labels = np.array([])
 
-    X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    X_categorical = features[categorical_features].values
+    X_continuous = features.drop(*[categorical_features], axis=1)
+    logger.info(f"X_categorical: {X_categorical.shape} X_continuous: {X_continuous.shape} ")
 
     if training is True:
+        logger.info("Training true. Encoding...")
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
-        y = lb.fit_transform(y.values).ravel()
-        logger.info("Training true. Encoded.")
+        labels = lb.fit_transform(labels.values).ravel()
     else:
+        logger.info(f"Training false. Encoding X ({X_categorical.shape})...")
         X_categorical = encoder.transform(X_categorical)
+        logger.info(f"Training false. Encoding y ({labels.shape})...")
         try:
-            y = lb.transform(y.values).ravel()
+            labels = lb.transform(labels.values).ravel()
         # Catch the case where y is None because we're doing inference.
-        except AttributeError:
-            pass
-        logger.info("Training false. Encoded.")
-
-    X = np.concatenate([X_continuous, X_categorical], axis=1)
-    return X, y, encoder, lb
+        except Exception as error:
+            logger.error(f"Encoding Error: {error}")
+            raise 
+        
+    logger.info("Dataset encoded.")
+    features = np.concatenate([X_continuous, X_categorical], axis=1)
+    return features, labels, encoder, lb
 
 
 
