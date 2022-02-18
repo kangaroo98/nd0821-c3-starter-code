@@ -7,18 +7,18 @@ stages:
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     - path: starter/clean_data.py
-      md5: 10413927b20425e10f169b2f4ec3b1ed
-      size: 887
+      md5: 7423261f8163bb739341bebf43acadab
+      size: 900
     outs:
     - path: data/cleaned_census.csv
-      md5: 26fe782a9c253641e0b50a4207eed5da
-      size: 3700096
+      md5: 864f768c94aa0cdf64cc58281cac4835
+      size: 3515983
   train_model:
     cmd: python starter/train_model.py
     deps:
     - path: data/cleaned_census.csv
-      md5: 26fe782a9c253641e0b50a4207eed5da
-      size: 3700096
+      md5: 864f768c94aa0cdf64cc58281cac4835
+      size: 3515983
     - path: starter/ml/data.py
       md5: efdfccc49d97f2349e8b895c79e874d4
       size: 2808
@@ -26,31 +26,31 @@ stages:
       md5: 6049d427e20328f2fe0f524bbea4ba8a
       size: 2620
     - path: starter/train_model.py
-      md5: 018dd5b324169cd2ad51d5c7cffa2092
-      size: 3892
+      md5: dab098b638e565a7dc732c41ac28d16f
+      size: 3909
     outs:
     - path: model/encoder.pkl
       md5: a553f204feb7d25cff7013915fd7ce8a
       size: 3898
     - path: model/model.pkl
-      md5: e8285966c00b2a0e1f26830280a5a6ac
-      size: 1739486
+      md5: 8007d2ad0de82a4359a429931ce91762
+      size: 1951446
     - path: model/score.json
-      md5: 2da396672dd6a99ec93cd5496f08e900
+      md5: 68ca7fc99c222adbcd46e7d2253f44da
       size: 126
   segregate_data:
     cmd: python starter/segregate.py
     deps:
     - path: data/cleaned_census.csv
-      md5: 26fe782a9c253641e0b50a4207eed5da
-      size: 3700096
+      md5: 864f768c94aa0cdf64cc58281cac4835
+      size: 3515983
     - path: starter/segregate.py
-      md5: 08b1a281c3454fd34a4b8c22643b5eef
-      size: 1373
+      md5: 16fdbc6e50db57b438a6e18fd8a3dcb7
+      size: 1386
     outs:
     - path: data/test_cleaned_census.csv
-      md5: 337c23df7270a5042c0b38f86d044184
-      size: 778052
+      md5: 7785dbfd0af63fe8d42bc9c30e673eff
+      size: 704314
     - path: data/train_cleaned_census.csv
-      md5: 758256915fa6a808851f4eb2ca8c6747
-      size: 3106334
+      md5: 779f5f83ac43afed7caaa9f25627a114
+      size: 2811824
