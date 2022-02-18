@@ -13,6 +13,7 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
+from ml.data import cat_features
 from ml.data import process_data
 from ml.data import load_model_artifacts
 from ml.model import compute_model_metrics
