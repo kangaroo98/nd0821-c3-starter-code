@@ -11,6 +11,9 @@ from sklearn.ensemble import RandomForestClassifier
 import yaml
 from yaml import CLoader as Loader
 
+from ml.data import cat_features
+from ml.data import num_features
+from ml.data import target
 from ml.data import process_data
 import logging
 
@@ -76,7 +79,7 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def validate_model(model, encoder, lb, X, cat_features, target):
+def validate_model(model, encoder, lb, X):
     """ Run model inferences and return the predictions.
 
     Inputs
@@ -98,8 +101,7 @@ def validate_model(model, encoder, lb, X, cat_features, target):
     logger.info(f"Inference input dataset X: ({X.shape})")
 
     # preprocess and predict
-    X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
-                                    label=target, training=False, encoder=encoder, lb=lb)
+    X_trained_columns, y_actual_results, _, _ = process_data(X, process_type='val_test', encoder=encoder, lb=lb)
     logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
 
     # predict 
@@ -126,12 +128,11 @@ def inference(model, encoder, lb, X):
     logger.info(f"Inference input dataset X: ({X.shape})")
 
     # preprocess and predict
-    X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
-                                    label=None, training=False, encoder=encoder, lb=lb)
-    logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
+    X_trans_cols, y_actual_results, _, _ = process_data(X, process_type='inference', encoder=encoder, lb=lb)
+    logger.info(f"X_trained_columns: ({X_trans_cols.shape}) y_actual_results: ({y_actual_results.shape}) ")
 
     # predict 
-    predictions = model.predict(X_trained_columns)
+    predictions = model.predict(X_trans_cols)
     logger.info(f"Salaray prediction: {predictions}")
 
     return predictions 

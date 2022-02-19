@@ -25,7 +25,6 @@ cat_features = [
     "sex",
     "native-country",
 ]
-
 num_features = [
     "age",
     "fnlgt",
@@ -34,6 +33,8 @@ num_features = [
     "capital-loss",  
     "hours-per-week",
 ]
+target = "salary"
+process_type = ['train','val_test','inference']
 
 
 def save_model_artifacts(file_dir, model, encoder, lb, score):
@@ -93,9 +94,7 @@ def load_model_artifacts(file_dir):
     return model, encoder, lb, score
 
 
-def process_data(
-    dataset, categorical_features=[], label=None, training=False, encoder=None, lb=None
-):
+def process_data(dataset, process_type='train', encoder=None, lb=None):
     """ Process the data used in the machine learning pipeline.
 
     Processes the data using one hot encoding for the categorical features and a
@@ -135,27 +134,27 @@ def process_data(
         passed in.
     """
     assert(dataset.shape[0] > 1)
-    assert(set(dataset[categorical_features]).issubset(set(dataset)))
+    assert(set(dataset[cat_features]).issubset(set(dataset)))
     
     logger.info(f"Dataset shape: {dataset.shape}")
 
-    if label is not None:
+    if (process_type != 'inference'):
         # training/validation/test
-        assert(label in set(dataset.columns))
-        labels = dataset[label]
-        features = dataset.drop([label], axis=1)
+        assert(target in set(dataset.columns))
+        labels = dataset[target]
+        features = dataset.drop([target], axis=1)
     else:
         # inferenece
         labels = np.array([])
 
-    X_categorical = features[categorical_features].values
-    X_continuous = features.drop(*[categorical_features], axis=1)
+    X_categorical = features[cat_features].values
+    X_continuous = features.drop(*[cat_features], axis=1)
     logger.info(f"X_categorical: {X_categorical.shape} X_continuous: {X_continuous.shape} ")
 
-    if (training is True):
+    if (process_type == 'train'):
         # training
         logger.info("Preparing data for training...Encoding...")
-        assert((label is not None) and (encoder is None) and (lb is None))
+        assert((encoder is None) and (lb is None))
 
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
@@ -168,7 +167,7 @@ def process_data(
         assert(encoder is not None)
         
         X_categorical = encoder.transform(X_categorical)
-        if (label is not None):
+        if (process_type == 'val_test'):
             # validation/test
             logger.info("Preparing label data for validation/test...Encoding...")
             assert(lb is not None)
@@ -176,6 +175,7 @@ def process_data(
         
     logger.info("Dataset encoded.")
     features = np.concatenate([X_continuous, X_categorical], axis=1)
+
     return features, labels, encoder, lb
 
 

@@ -21,6 +21,7 @@ stages:
     cmd: python starter/train_model.py
     params:
       - train_model.random_state
+      - train_model.test_size
       - train_model.param_grid
     deps:
       - starter/train_model.py

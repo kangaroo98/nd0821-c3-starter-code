@@ -7,20 +7,13 @@ from matplotlib.font_manager import json_dump, json_load
 from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
-import os
-import joblib
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 
-from ml.data import cat_features
-from ml.data import process_data
 from ml.data import load_model_artifacts
 from ml.model import compute_model_metrics
 from ml.model import validate_model
-from ml.model import inference
-import logging
 
+import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
@@ -37,7 +30,7 @@ def evaluate(model, encoder, lb, score, X):
     '''
     logger.info(f"Evaluating test dataset size: {X.shape}")
 
-    preds, acts = validate_model(model, encoder, lb, X, cat_features, 'salary')
+    preds, acts = validate_model(model, encoder, lb, X)
     logger.info(f"Prediction: {preds} vs. Actual Values: {acts}")
 
     precision, recall, fbeta = compute_model_metrics(acts, preds)
