@@ -5,3 +5,6 @@ train_model:
     max_features: ["auto", "sqrt"]
     max_depth: [4, 5, 10]
     criterion: ["gini", "entropy"]
+segregate_data:
+  random_state: 42
+  test_size: 0.2

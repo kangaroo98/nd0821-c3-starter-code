@@ -8,6 +8,9 @@ stages:
       - data/cleaned_census.csv
   segregate_data:
     cmd: python starter/segregate.py
+    params:
+      - segregate_data.test_size
+      - segregate_data.random_state
     deps:
       - starter/segregate.py
       - data/cleaned_census.csv

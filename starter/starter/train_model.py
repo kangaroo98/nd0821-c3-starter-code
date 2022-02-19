@@ -23,7 +23,17 @@ logger = logging.getLogger()
 
 
 def start_train_pipeline(df):
+    '''
+    Model training pipeline including train/validate split, preprocessing and model training.
 
+    Input: 
+    - df - Cleand dataframe 
+    Output: 
+    - model - RandomForestClassifier
+    - encoder - OneHot Encoder
+    - lb - Label Binarizer
+    - val_score - Json 
+    '''
     # Optional enhancement, use K-fold cross validation instead of a train-test split.
     train, val = train_test_split(df, test_size=0.20)
     logger.info(f"Data is split into train and test.")

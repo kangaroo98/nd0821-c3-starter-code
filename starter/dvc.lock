@@ -7,8 +7,8 @@ stages:
       md5: 145de00f6e6053d3f7044628f9a5b5ff
       size: 3974474
     - path: starter/clean_data.py
-      md5: 725c8a0be18a5d5791893d8d97e244be
-      size: 979
+      md5: 5c3249d06a71d988f66d8c26eee153e2
+      size: 1219
     outs:
     - path: data/cleaned_census.csv
       md5: 864f768c94aa0cdf64cc58281cac4835
@@ -20,14 +20,14 @@ stages:
       md5: 779f5f83ac43afed7caaa9f25627a114
       size: 2811824
     - path: starter/ml/data.py
-      md5: 24b2265e1f1de7cea8bf5a3c41a0b24f
-      size: 4846
+      md5: 4214b94f699195016277ff9eeda0ae00
+      size: 5823
     - path: starter/ml/model.py
-      md5: 5cfe1d5dc9e5cd938523fc99a1173a92
-      size: 2932
+      md5: 5232d4e1393188fb22e86c1fb5f92faf
+      size: 4014
     - path: starter/train_model.py
-      md5: 1d38942f72712bdd101c92ef2a5f8140
-      size: 2271
+      md5: 15ce84f48491ab926dce3f3ec0c7729c
+      size: 2554
     params:
       params.yaml:
         train_model.param_grid:
@@ -53,11 +53,11 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: 6a722ffc8b621ff642c631dcf15929c6
-      size: 214604
+      md5: 074d07d5d56753724bbb86eae13e2e3b
+      size: 164351
     - path: model/score.json
-      md5: 2b4d44022f620de33e5020619d16c076
-      size: 112
+      md5: 0f3bfb9152d5540cf6a8ceb07a56e50f
+      size: 127
   segregate_data:
     cmd: python starter/segregate.py
     deps:
@@ -65,8 +65,12 @@ stages:
       md5: 864f768c94aa0cdf64cc58281cac4835
       size: 3515983
     - path: starter/segregate.py
-      md5: 16fdbc6e50db57b438a6e18fd8a3dcb7
-      size: 1386
+      md5: 1ad8db25a16b3c75ad1baa334111b8a4
+      size: 2018
+    params:
+      params.yaml:
+        segregate_data.random_state: 42
+        segregate_data.test_size: 0.2
     outs:
     - path: data/test_cleaned_census.csv
       md5: 7785dbfd0af63fe8d42bc9c30e673eff
@@ -111,14 +115,14 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: 6a722ffc8b621ff642c631dcf15929c6
-      size: 214604
+      md5: 074d07d5d56753724bbb86eae13e2e3b
+      size: 164351
     - path: starter/evaluate.py
-      md5: 925f59a0361f1ef9356a542b9b7f6cf4
-      size: 1555
+      md5: 7e43b3cdc3afba0083f96cb1b22c863e
+      size: 2004
     - path: starter/ml/data.py
-      md5: 24b2265e1f1de7cea8bf5a3c41a0b24f
-      size: 4846
+      md5: 4214b94f699195016277ff9eeda0ae00
+      size: 5823
     - path: starter/ml/model.py
-      md5: 5cfe1d5dc9e5cd938523fc99a1173a92
-      size: 2932
+      md5: 5232d4e1393188fb22e86c1fb5f92faf
+      size: 4014

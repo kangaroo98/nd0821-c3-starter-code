@@ -1,3 +1,7 @@
+'''
+Author: Oliver
+Date: February 2022
+'''
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.metrics import classification_report, RocCurveDisplay
 from sklearn.model_selection import GridSearchCV
@@ -28,7 +32,8 @@ def train_model(X_train, y_train):
     Returns
     -------
     model
-        Trained machine learning model.
+        - Trained machine learning model.
+        - Name of the model
     """
     # logistic regression
     # lrc = LogisticRegression(max_iter=1000)
@@ -71,7 +76,40 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def inference(model, encoder, lb, X, cat_features, label):
+def validate_model(model, encoder, lb, X, cat_features, target):
+    """ Run model inferences and return the predictions.
+
+    Inputs
+    ------
+    model :
+    encoder: 
+    lb:
+        Trained machine learning model.
+    X : np.array
+        Data used for validation.
+    cat_features: category features in the dataset
+    target: target column 
+
+    Returns
+    -------
+    preds : np.array-Predictions from the model.
+    y_actual_results: np.array-Actual results of the dataset.
+    """
+    logger.info(f"Inference input dataset X: ({X.shape})")
+
+    # preprocess and predict
+    X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
+                                    label=target, training=False, encoder=encoder, lb=lb)
+    logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
+
+    # predict 
+    predictions = model.predict(X_trained_columns)
+    logger.info(f"Predicted: Salaray prediction: {predictions} Actual results: {y_actual_results}")
+
+    return predictions, y_actual_results 
+
+
+def inference(model, encoder, lb, X):
     """ Run model inferences and return the predictions.
 
     Inputs
@@ -89,12 +127,12 @@ def inference(model, encoder, lb, X, cat_features, label):
 
     # preprocess and predict
     X_trained_columns, y_actual_results, _, _ = process_data(X, categorical_features=cat_features,
-                                    label=label, training=False, encoder=encoder, lb=lb)
+                                    label=None, training=False, encoder=encoder, lb=lb)
     logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
 
     # predict 
     predictions = model.predict(X_trained_columns)
-    logger.info(f"Predicted: Salaray prediction: {predictions} Actual results: {y_actual_results}")
+    logger.info(f"Salaray prediction: {predictions}")
 
-    return predictions, y_actual_results 
+    return predictions 
 

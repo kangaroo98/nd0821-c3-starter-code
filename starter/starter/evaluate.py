@@ -17,6 +17,7 @@ from ml.data import cat_features
 from ml.data import process_data
 from ml.data import load_model_artifacts
 from ml.model import compute_model_metrics
+from ml.model import validate_model
 from ml.model import inference
 import logging
 
@@ -25,17 +26,26 @@ logger = logging.getLogger()
 
 
 def evaluate(model, encoder, lb, score, X):
+    '''
+    evaluate the quality of the model using a test dataset X
 
-    logger.info(f"Test dataset: {X}")
+    model: trained model
+    encoder: OneHot encoder used to train the model
+    lb: LabelBinarizer used to train the model
+    score: score of the trained model
+    X: test dataset  
+    '''
+    logger.info(f"Evaluating test dataset size: {X.shape}")
 
-    preds, acts = inference(model, encoder, lb, X, cat_features, 'salary')
+    preds, acts = validate_model(model, encoder, lb, X, cat_features, 'salary')
     logger.info(f"Prediction: {preds} vs. Actual Values: {acts}")
 
     precision, recall, fbeta = compute_model_metrics(acts, preds)
     test_score = {"name": score["name"], "precision": precision, "recall": recall, "fbeta": fbeta}
+    logger.info(f"Train metrics: {score}")
     logger.info(f"Test metrics: {test_score}")
 
-    # tbd - visualise
+    # tbd - visualisation
 
 
 if __name__ == "__main__":
@@ -49,6 +59,9 @@ if __name__ == "__main__":
 
         # model evaluation 
         evaluate(model, encoder, lb, score, X)
+
+        # model inference
+        # preds = inference(model, encoder, lb, X)
 
     except (Exception) as error:
         print("main error: %s", error)

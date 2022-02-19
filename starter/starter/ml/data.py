@@ -1,3 +1,7 @@
+'''
+Author: Oliver
+Date: February 2022
+'''
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
@@ -32,9 +36,18 @@ num_features = [
 ]
 
 
-
 def save_model_artifacts(file_dir, model, encoder, lb, score):
+    '''
+    save model artifacts in file_dir
+    Naming Convention and artifacts of the model:
+    model.pkl - model
+    encoder.pkl - OneHot Encoder
+    lb.pkl - Binarizer
+    score - Metrics of the model
 
+    Input: model, encoder, lb, score - as described above
+    Output: -
+    '''
     # save the model and the OneHot encoder
     model_pth = str(file_dir + '/' + 'model.pkl')
     encoder_pth = str(file_dir + '/' + 'encoder.pkl')
@@ -51,7 +64,17 @@ def save_model_artifacts(file_dir, model, encoder, lb, score):
 
 
 def load_model_artifacts(file_dir):
+    '''
+    load model artifacts stored in file_dir
+    Naming Convention and artifacts of the model:
+    model.pkl - model
+    encoder.pkl - OneHot Encoder
+    lb.pkl - Binarizer
+    score - Metrics of the model
 
+    Input: file_dir - Directory of the model
+    Output: model, encoder, lb, score - as described above
+    '''
     # load model and encoder
     model_pth = str(file_dir + '/' + 'model.pkl')
     encoder_pth = str(file_dir + '/' + 'encoder.pkl')
@@ -71,7 +94,7 @@ def load_model_artifacts(file_dir):
 
 
 def process_data(
-    dataset, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    dataset, categorical_features=[], label=None, training=False, encoder=None, lb=None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -111,35 +134,45 @@ def process_data(
         Trained LabelBinarizer if training is True, otherwise returns the binarizer
         passed in.
     """
-
+    assert(dataset.shape[0] > 1)
+    assert(set(dataset[categorical_features]).issubset(set(dataset)))
+    
     logger.info(f"Dataset shape: {dataset.shape}")
 
     if label is not None:
+        # training/validation/test
+        assert(label in set(dataset.columns))
         labels = dataset[label]
         features = dataset.drop([label], axis=1)
     else:
+        # inferenece
         labels = np.array([])
 
     X_categorical = features[categorical_features].values
     X_continuous = features.drop(*[categorical_features], axis=1)
     logger.info(f"X_categorical: {X_categorical.shape} X_continuous: {X_continuous.shape} ")
 
-    if training is True:
-        logger.info("Training true. Encoding...")
+    if (training is True):
+        # training
+        logger.info("Preparing data for training...Encoding...")
+        assert((label is not None) and (encoder is None) and (lb is None))
+
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
         labels = lb.fit_transform(labels.values).ravel()
+
     else:
-        logger.info(f"Training false. Encoding X ({X_categorical.shape})...")
+        # validation/test/inference
+        logger.info("Preparing data for validation/test/inference...Encoding...")
+        assert(encoder is not None)
+        
         X_categorical = encoder.transform(X_categorical)
-        logger.info(f"Training false. Encoding y ({labels.shape})...")
-        try:
+        if (label is not None):
+            # validation/test
+            logger.info("Preparing label data for validation/test...Encoding...")
+            assert(lb is not None)
             labels = lb.transform(labels.values).ravel()
-        # Catch the case where y is None because we're doing inference.
-        except Exception as error:
-            logger.error(f"Encoding Error: {error}")
-            raise 
         
     logger.info("Dataset encoded.")
     features = np.concatenate([X_continuous, X_categorical], axis=1)

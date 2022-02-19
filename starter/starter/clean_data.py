@@ -1,5 +1,5 @@
 '''
-Cleaning the dataset
+Cleaning a dataset
 
 Author: Oliver
 Date: February 2022
@@ -13,6 +13,14 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 def remove_duplicates(file_pth):
+    '''
+    Drop the duplicates of a given dataframe.
+    Naming Convention of the cleaned dataset:
+    OriginalDirectory/cleaned_OriginalFileName
+
+    Input: file_pth - raw_data
+    Output: cleaned_data stored in the same directory 
+    '''
     # Add code to load in the data.
     file_dir, file_name = os.path.split(file_pth)
     df = pd.read_csv(file_pth, sep = '\s*,\s*', engine = 'python')
