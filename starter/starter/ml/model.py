@@ -21,7 +21,6 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
@@ -80,7 +79,7 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def validate_model(model, encoder, lb, X):
+def validate_model(model, encoder, lb, score, X):
     """ Run model inferences and return the predictions.
 
     Inputs
@@ -88,11 +87,11 @@ def validate_model(model, encoder, lb, X):
     model :
     encoder: 
     lb:
+    score:
         Trained machine learning model.
+    
     X : np.array
         Data used for validation.
-    cat_features: category features in the dataset
-    target: target column 
 
     Returns
     -------
@@ -107,9 +106,12 @@ def validate_model(model, encoder, lb, X):
 
     # predict 
     predictions = model.predict(X_trained_columns)
-    logger.info(f"Predicted: Salaray prediction: {predictions} Actual results: {y_actual_results}")
+    logger.info(f"Encoded predictions: {predictions} Encoded actual results: {y_actual_results}")
 
-    return predictions, y_actual_results 
+    precision, recall, fbeta = compute_model_metrics(y_actual_results, predictions)
+    test_score = {"name": score["name"], "precision": precision, "recall": recall, "fbeta": fbeta}
+
+    return test_score, lb.inverse_transform(predictions), lb.inverse_transform(y_actual_results)
 
 
 def inference(model, encoder, lb, X):

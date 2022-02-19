@@ -14,43 +14,49 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-# # all columsn representing the given dataset
-# cat_features = [
-#     "workclass",
-#     "education",
-#     "marital-status",
-#     "occupation",
-#     "relationship",
-#     "race",
-#     "sex",
-#     "native-country",
-# ]
-# num_features = [
-#     "age",
-#     "fnlgt",
-#     "education-num",
-#     "capital-gain",
-#     "capital-loss",  
-#     "hours-per-week",
-# ]
-# target = "salary"
 # used columns in model training
 cat_features = [
-    "workclass",
-    "education",
+#    "workclass",
+#    "education",
     "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
 ]
 num_features = [
     "age",
+    "fnlgt",
+    "education-num",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
 ]
 target = "salary"
+
+inference_test_data = {
+#            "workclass": ['Private', 'Self-emp-not-inc', 'Local-gov'],
+#            "education": ["HS-grad","Some-college","Bachelors"],
+            "marital-status": ['Never-married', 'Married-civ-spouse', 'Divorced'],
+            "occupation": ["Sales","Tech-support","Priv-house-serv"],
+            "relationship": ["Not-in-family","Husband","Other-relative"],
+            "race": ["Black","Asian-Pac-Islander","White"],
+            "sex": ["Male","Female","Male"],
+            "native-country": ["United-States","Nicaragua","Honduras"],
+            "age": [44,36,26],
+            "fnlgt": ["80000","160000","40000"],
+            "education-num": ['9', '2', '12'],
+            "capital-gain": [5000,500,0],
+            "capital-loss": [0,0,0],
+            "hours-per-week": ["25", "60","40"],
+}
 
 process_type = [
     'train',
     'val_test',
     'inference'
 ]
-
 
 def save_model_artifacts(file_dir, model, encoder, lb, score):
     '''
@@ -138,9 +144,9 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
     Returns
     -------
     X : np.array
-        Processed data.
+        Processed data. Encoded!
     y : np.array
-        Processed labels if labeled=True, otherwise empty np.array.
+        Processed labels if labeled=True, otherwise empty np.array. Encoded!
     encoder : sklearn.preprocessing._encoders.OneHotEncoder
         Trained OneHotEncoder if training is True, otherwise returns the encoder passed
         in.

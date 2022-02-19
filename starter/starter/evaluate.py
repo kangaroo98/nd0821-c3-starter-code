@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 
 from ml.data import load_model_artifacts
+from ml.data import inference_test_data
 from ml.model import compute_model_metrics
 from ml.model import validate_model
 from ml.model import inference
@@ -28,11 +29,8 @@ def evaluate(model, encoder, lb, score, X):
     '''
     logger.info(f"Evaluating test dataset size: {X.shape}")
 
-    preds, acts = validate_model(model, encoder, lb, X)
+    test_score, preds, acts = validate_model(model, encoder, lb, score, X)
     logger.info(f"Prediction: {preds} vs. Actual Values: {acts}")
-
-    precision, recall, fbeta = compute_model_metrics(acts, preds)
-    test_score = {"name": score["name"], "precision": precision, "recall": recall, "fbeta": fbeta}
     logger.info(f"Train metrics: {score}")
     logger.info(f"Test metrics: {test_score}")
 
@@ -51,15 +49,8 @@ if __name__ == "__main__":
         # model evaluation 
         evaluate(model, encoder, lb, score, X)
 
-        # model inference test
-        data = {
-            "workclass": ['Private', 'Private', 'Private'],
-            "education": ['Never-married', 'Never-married', 'Never-married'],
-            "marital-status": ['Bachelors', 'Bachelors', 'Bachelors'],
-            "age": [55,20,5],
-        }
-        
-        test_df = pd.DataFrame(data)
+        # model inference test - inference_test_data define in data.py
+        test_df = pd.DataFrame(inference_test_data)
         logger.info(f"Predict test data: {test_df}")
         test_preds = inference(model, encoder, lb, test_df)
         logger.info(f"Test prediction: {test_preds}")

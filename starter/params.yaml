@@ -2,7 +2,7 @@ train_model:
   random_state: 42
   test_size: 0.2
   param_grid:
-    n_estimators: [2, 5]
+    n_estimators: [20, 50]
     max_features: ["auto", "sqrt"]
     max_depth: [4, 5, 10]
     criterion: ["gini", "entropy"]
