@@ -46,4 +46,4 @@ def test_check_countries(data):
     '''
     check for unknown countries 
     '''
-    assert(df['native-country'].loc[df['native-country'] == '?'].any() == False)
+    assert(data['native-country'].loc[data['native-country'] == '?'].any() == False)
