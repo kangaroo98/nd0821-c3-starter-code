@@ -4,6 +4,7 @@ Date: February 2022
 '''
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.metrics import classification_report, RocCurveDisplay
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
@@ -128,11 +129,11 @@ def inference(model, encoder, lb, X):
     logger.info(f"Inference input dataset X columns: ({X.columns})")
 
     # preprocess and predict
-    X_trans_cols, y_actual_results, _, _ = process_data(X, process_type='inference', encoder=encoder, lb=lb)
+    X_trans_cols, y_actual_results, _, _ = process_data(X, process_type='inference', encoder=encoder)
     logger.info(f"X_trained_columns: ({X_trans_cols.shape}) y_actual_results: ({y_actual_results.shape}) ")
 
     # predict 
     predictions = model.predict(X_trans_cols)
 
-    return predictions 
+    return lb.inverse_transform(predictions)
 
