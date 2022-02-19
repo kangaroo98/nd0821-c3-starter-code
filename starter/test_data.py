@@ -41,3 +41,9 @@ def test_check_duplicates(data):
     check for duplicate rows
     '''
     assert(data.duplicated().any() == False)
+
+def test_check_countries(data):
+    '''
+    check for unknown countries 
+    '''
+    assert(df['native-country'].loc[df['native-country'] == '?'].any() == False)
