@@ -34,7 +34,9 @@ def evaluate(model, encoder, lb, score, X):
     logger.info(f"Train metrics: {score}")
     logger.info(f"Test metrics: {test_score}")
 
-    # tbd - visualisation
+    # tbd- slices performance
+
+    # tbd (opt.) - visualisation
 
 
 if __name__ == "__main__":
