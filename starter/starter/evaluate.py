@@ -2,16 +2,14 @@
 Author: Oliver
 Date: February 2022
 '''
-# Script to train machine learning model.
-from matplotlib.font_manager import json_dump, json_load
-from sklearn.model_selection import train_test_split
-
 # Add the necessary imports for the starter code.
 import pandas as pd
+import numpy as np
 
 from ml.data import load_model_artifacts
 from ml.model import compute_model_metrics
 from ml.model import validate_model
+from ml.model import inference
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -46,15 +44,25 @@ if __name__ == "__main__":
     try:
 
         # load model artifacts
-        model, encoder, lb, score = load_model_artifacts("./model")
-        X = pd.read_csv("./data/test_cleaned_census.csv")
+        model, encoder, lb, score = load_model_artifacts("/Users/Oliver/Development/nd0821-c3-starter-code/starter/model")
+        X = pd.read_csv("/Users/Oliver/Development/nd0821-c3-starter-code/starter/data/test_cleaned_census.csv")
         logger.info(f"Test dataset ({X.shape})")
 
         # model evaluation 
         evaluate(model, encoder, lb, score, X)
 
-        # model inference
-        # preds = inference(model, encoder, lb, X)
+        # model inference test
+        data = {
+            "workclass": ['Private', 'Private', 'Private'],
+            "education": ['Never-married', 'Never-married', 'Never-married'],
+            "marital-status": ['Bachelors', 'Bachelors', 'Bachelors'],
+            "age": [55,20,5],
+        }
+        
+        test_df = pd.DataFrame(data)
+        logger.info(f"Predict test data: {test_df}")
+        test_preds = inference(model, encoder, lb, test_df)
+        logger.info(f"Test prediction: {test_preds}")
 
     except (Exception) as error:
         print("main error: %s", error)

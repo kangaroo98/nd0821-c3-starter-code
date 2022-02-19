@@ -125,7 +125,7 @@ def inference(model, encoder, lb, X):
     preds : np.array
         Predictions from the model.
     """
-    logger.info(f"Inference input dataset X: ({X.shape})")
+    logger.info(f"Inference input dataset X columns: ({X.columns})")
 
     # preprocess and predict
     X_trans_cols, y_actual_results, _, _ = process_data(X, process_type='inference', encoder=encoder, lb=lb)
@@ -133,7 +133,6 @@ def inference(model, encoder, lb, X):
 
     # predict 
     predictions = model.predict(X_trans_cols)
-    logger.info(f"Salaray prediction: {predictions}")
 
     return predictions 
 

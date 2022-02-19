@@ -7,8 +7,6 @@ from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 
 from ml.data import process_data
 from ml.data import save_model_artifacts

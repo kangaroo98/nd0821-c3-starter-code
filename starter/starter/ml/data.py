@@ -14,27 +14,42 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
-
+# # all columsn representing the given dataset
+# cat_features = [
+#     "workclass",
+#     "education",
+#     "marital-status",
+#     "occupation",
+#     "relationship",
+#     "race",
+#     "sex",
+#     "native-country",
+# ]
+# num_features = [
+#     "age",
+#     "fnlgt",
+#     "education-num",
+#     "capital-gain",
+#     "capital-loss",  
+#     "hours-per-week",
+# ]
+# target = "salary"
+# used columns in model training
 cat_features = [
     "workclass",
     "education",
     "marital-status",
-    "occupation",
-    "relationship",
-    "race",
-    "sex",
-    "native-country",
 ]
 num_features = [
     "age",
-    "fnlgt",
-    "education-num",
-    "capital-gain",
-    "capital-loss",  
-    "hours-per-week",
 ]
 target = "salary"
-process_type = ['train','val_test','inference']
+
+process_type = [
+    'train',
+    'val_test',
+    'inference'
+]
 
 
 def save_model_artifacts(file_dir, model, encoder, lb, score):
@@ -136,7 +151,7 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
     assert(dataset.shape[0] > 1)
     assert(set(dataset[cat_features]).issubset(set(dataset)))
     
-    logger.info(f"Dataset shape: {dataset.shape}")
+    logger.info(f"Preprocessing dataset shape: {dataset.shape}")
 
     if (process_type != 'inference'):
         # training/validation/test
@@ -144,11 +159,12 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
         labels = dataset[target]
         features = dataset.drop([target], axis=1)
     else:
-        # inferenece
+        # inference - no label
         labels = np.array([])
+        features = dataset.copy()
 
     X_categorical = features[cat_features].values
-    X_continuous = features.drop(*[cat_features], axis=1)
+    X_continuous = features[num_features].values
     logger.info(f"X_categorical: {X_categorical.shape} X_continuous: {X_continuous.shape} ")
 
     if (process_type == 'train'):
@@ -174,7 +190,7 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
             labels = lb.transform(labels.values).ravel()
         
     logger.info("Dataset encoded.")
-    features = np.concatenate([X_continuous, X_categorical], axis=1)
+    features = np.concatenate([X_categorical, X_continuous], axis=1)
 
     return features, labels, encoder, lb
 
