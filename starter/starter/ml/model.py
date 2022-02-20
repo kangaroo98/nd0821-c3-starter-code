@@ -12,12 +12,9 @@ from sklearn.ensemble import RandomForestClassifier
 import yaml
 from yaml import CLoader as Loader
 
-from ml.data import cat_features
-from ml.data import num_features
-from ml.data import target
-from ml.data import process_data
-import logging
+from starter.ml.data import process_data
 
+import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
@@ -110,6 +107,8 @@ def validate_model(model, encoder, lb, score, X):
 
     precision, recall, fbeta = compute_model_metrics(y_actual_results, predictions)
     test_score = {"name": score["name"], "precision": precision, "recall": recall, "fbeta": fbeta}
+
+    logger.info(f"Validated Model Precision: {test_score}")
 
     return test_score, lb.inverse_transform(predictions), lb.inverse_transform(y_actual_results)
 

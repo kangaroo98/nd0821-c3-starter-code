@@ -10,7 +10,6 @@ import joblib
 from matplotlib.font_manager import json_dump, json_load
 
 import logging
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
@@ -155,9 +154,9 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
         passed in.
     """
     assert(dataset.shape[0] > 1)
-    assert(set(dataset[cat_features]).issubset(set(dataset)))
+    assert(set(dataset[cat_features+num_features]).issubset(set(dataset)))
     
-    logger.info(f"Preprocessing dataset shape: {dataset.shape}")
+    logger.info(f"Preprocessing dataset size: {dataset.shape} wiht festures: {cat_features+num_features}")
 
     if (process_type != 'inference'):
         # training/validation/test
@@ -166,6 +165,8 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
         features = dataset.drop([target], axis=1)
     else:
         # inference - no label
+        logger.info(f"Preprocessing Inference {lb}")
+        assert(lb is None)
         labels = np.array([])
         features = dataset.copy()
 
