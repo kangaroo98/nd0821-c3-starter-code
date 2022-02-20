@@ -33,7 +33,7 @@ stages:
         train_model.param_grid:
           n_estimators:
           - 20
-          - 50
+          - 60
           max_features:
           - auto
           - sqrt
@@ -54,10 +54,10 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: c7069de614ff24f63f2c7f37b1cb3828
-      size: 1627019
+      md5: b2b062f4504ae9af0b7948767f3945ea
+      size: 1879676
     - path: model/score.json
-      md5: 96ea484ec9f43d563ffcd5a1eb43b0e4
+      md5: 90140f14daa25309b0fb8c37c5ef8c92
       size: 126
   segregate_data:
     cmd: python segregate.py
@@ -125,5 +125,5 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: c7069de614ff24f63f2c7f37b1cb3828
-      size: 1627019
+      md5: b2b062f4504ae9af0b7948767f3945ea
+      size: 1879676
