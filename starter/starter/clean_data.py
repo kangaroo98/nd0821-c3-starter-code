@@ -6,9 +6,9 @@ Date: February 2022
 
 '''
 import pandas as pd
-import logging
-import os
 
+import os
+import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 

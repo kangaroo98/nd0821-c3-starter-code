@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 import yaml
 from yaml import CLoader as Loader
 
-from starter.ml.data import process_data
+from ml.data import process_data
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -53,7 +53,6 @@ def train_model(X_train, y_train):
     
     return cv_rfc.best_estimator_, str("RandomForest")
 
-
 def compute_model_metrics(y, preds):
     """
     Validates the trained machine learning model using precision, recall, and F1.
@@ -75,7 +74,6 @@ def compute_model_metrics(y, preds):
     recall = recall_score(y, preds, zero_division=1)
     return precision, recall, fbeta
 
-
 def validate_model(model, encoder, lb, score, X):
     """ Run model inferences and return the predictions.
 
@@ -95,8 +93,7 @@ def validate_model(model, encoder, lb, score, X):
     preds : np.array-Predictions from the model.
     y_actual_results: np.array-Actual results of the dataset.
     """
-    logger.info(f"Inference input dataset X: ({X.shape})")
-
+    logger.info(f"Validate model with dataset. Size: {X.shape}")
     # preprocess and predict
     X_trained_columns, y_actual_results, _, _ = process_data(X, process_type='val_test', encoder=encoder, lb=lb)
     logger.info(f"X_trained_columns: ({X_trained_columns.shape}) y_actual_results: ({y_actual_results.shape}) ")
@@ -111,7 +108,6 @@ def validate_model(model, encoder, lb, score, X):
     logger.info(f"Validated Model Precision: {test_score}")
 
     return test_score, lb.inverse_transform(predictions), lb.inverse_transform(y_actual_results)
-
 
 def inference(model, encoder, lb, X):
     """ Run model inferences and return the predictions.

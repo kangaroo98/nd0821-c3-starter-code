@@ -6,9 +6,9 @@ Date: February 2022
 import pandas as pd
 import numpy as np
 
+
 from ml.data import load_model_artifacts
 from ml.data import inference_test_data
-from ml.model import compute_model_metrics
 from ml.model import validate_model
 from ml.model import inference
 
@@ -37,7 +37,8 @@ def evaluate(model, encoder, lb, score, X):
     # tbd- slices performance
 
     # tbd (opt.) - visualisation
-
+    
+    return test_score
 
 if __name__ == "__main__":
 

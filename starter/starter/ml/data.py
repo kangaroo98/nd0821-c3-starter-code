@@ -34,6 +34,7 @@ num_features = [
 ]
 target = "salary"
 
+# test data for inferencing
 inference_test_data = {
 #            "workclass": ['Private', 'Self-emp-not-inc', 'Local-gov'],
 #            "education": ["HS-grad","Some-college","Bachelors"],
@@ -51,11 +52,13 @@ inference_test_data = {
             "hours-per-week": ["25", "60","40"],
 }
 
+# preprocessing types in process_data
 process_type = [
     'train',
     'val_test',
     'inference'
 ]
+
 
 def save_model_artifacts(file_dir, model, encoder, lb, score):
     '''

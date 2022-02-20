@@ -4,12 +4,12 @@ Date: February 2022
 '''
 from sklearn.model_selection import train_test_split
 import pandas as pd
+
 import yaml
 from yaml import CLoader as Loader
 
 import os
 import logging
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
