@@ -40,6 +40,7 @@ def remove_unknown_country(df):
         logger.info(f"Dropped unkoknwn countries...New size: {df.shape}")
 
 
+
 if __name__ == "__main__":
     try:
         '''

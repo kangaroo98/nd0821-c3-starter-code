@@ -8,7 +8,7 @@ Date: February 2022
 import pytest
 import pandas as pd
 
-from starter.ml.data import load_model_artifacts
+from ml.data import load_model_artifacts
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -30,9 +30,9 @@ def data(request):
     if file_path is None:
         pytest.fail("--file missing on command line")
 
-    raw_data = pd.read_csv(file_path)
+    cleaned_data = pd.read_csv(file_path)
 
-    return raw_data
+    return cleaned_data
 
 @pytest.fixture(scope="session")
 def test_data(request):

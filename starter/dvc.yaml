@@ -1,32 +1,32 @@
 stages:
   clean_data:
-    cmd: python starter/clean_data.py
+    cmd: python clean_data.py
     deps:
-      - starter/clean_data.py
+      - clean_data.py
       - data/census.csv
     outs:
       - data/cleaned_census.csv
   segregate_data:
-    cmd: python starter/segregate.py
+    cmd: python segregate.py
     params:
       - segregate_data.test_size
       - segregate_data.random_state
     deps:
-      - starter/segregate.py
+      - segregate.py
       - data/cleaned_census.csv
     outs:
       - data/train_cleaned_census.csv
       - data/test_cleaned_census.csv
   train_model:
-    cmd: python starter/train_model.py
+    cmd: python train_model.py
     params:
       - train_model.random_state
       - train_model.test_size
       - train_model.param_grid
     deps:
-      - starter/train_model.py
-      - starter/ml/data.py
-      - starter/ml/model.py
+      - train_model.py
+      - ml/data.py
+      - ml/model.py
       - data/train_cleaned_census.csv
     outs:
       - model/model.pkl
@@ -36,11 +36,11 @@ stages:
       - model/score.json:
           cache: false
   evaluate:
-    cmd: python starter/evaluate.py
+    cmd: python evaluate.py
     deps:
-      - starter/evaluate.py
-      - starter/ml/data.py
-      - starter/ml/model.py
+      - evaluate.py
+      - ml/data.py
+      - ml/model.py
       - data/test_cleaned_census.csv
       - model/model.pkl
       - model/encoder.pkl

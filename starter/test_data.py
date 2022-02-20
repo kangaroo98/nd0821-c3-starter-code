@@ -8,9 +8,9 @@ import pytest
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
-from starter.ml.data import process_data
-from starter.ml.data import inference_test_data
-#from starter.evaluate import validate_model
+from ml.data import process_data
+from ml.data import inference_test_data
+from evaluate import validate_model
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -146,22 +146,21 @@ def test_preprocess_inf(model_artifacts):
         logger.error(f"TEST FAILED: {err}")
         assert False
 
-# def test_model_score(test_data, model_artifacts):
-#     '''
-#     check test data complies with trained model score (range max. diff: .1)     
-#     '''
-#     test_score, _, _ = validate_model(
-#             model_artifacts[0], 
-#             model_artifacts[1], 
-#             model_artifacts[2], 
-#             model_artifacts[3], 
-#             test_data
-#         )
+def test_model_score(test_data, model_artifacts):
+    '''
+    check test data complies with trained model score (range max. diff: .1)     
+    '''
+    test_score, _, _ = validate_model(
+            model_artifacts[0], 
+            model_artifacts[1], 
+            model_artifacts[2], 
+            model_artifacts[3], 
+            test_data
+        )
+    range_min = float(model_artifacts[3]['precision']-0.01)
+    range_max = float(model_artifacts[3]['precision']+0.01)
+    logger.info(f"Range Min: {range_min} Range Max: {range_max}")
+    logger.info(f"Testing metrics train vs test data: {model_artifacts[3]['precision']} vs {test_score['precision']}")
 
-#     range_min = float(model_artifacts[3]['precision']-0.01)
-#     range_max = float(model_artifacts[3]['precision']+0.01)
-#     logger.info(f"Range Min: {range_min} Range Max: {range_max}")
-#     logger.info(f"Testing metrics train vs test data: {model_artifacts[3]['precision']} vs {test_score['precision']}")
-
-#     if not ((test_score["precision"] > range_min) and (test_score["precision"] < range_max)):
-#         assert False
+    if not ((test_score["precision"] > range_min) and (test_score["precision"] < range_max)):
+        assert False
