@@ -148,7 +148,7 @@ def test_preprocess_inf(model_artifacts):
 
 def test_model_score(test_data, model_artifacts):
     '''
-    check test data complies with trained model score (range max. diff: .1)     
+    check test data complies with trained model score (range within 5%)     
     '''
     test_score, _, _ = validate_model(
             model_artifacts[0], 
@@ -157,8 +157,8 @@ def test_model_score(test_data, model_artifacts):
             model_artifacts[3], 
             test_data
         )
-    range_min = float(model_artifacts[3]['precision']-0.01)
-    range_max = float(model_artifacts[3]['precision']+0.01)
+    range_min = float(model_artifacts[3]['precision']-0.05)
+    range_max = float(model_artifacts[3]['precision']+0.05)
     logger.info(f"Range Min: {range_min} Range Max: {range_max}")
     logger.info(f"Testing metrics train vs test data: {model_artifacts[3]['precision']} vs {test_score['precision']}")
 
