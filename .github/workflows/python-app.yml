@@ -31,8 +31,7 @@ jobs:
         run: |
           dvc pull
           dvc repro starter/dvc.yaml
-          pytest -v --raw_data starter/data/cleaned_census.csv
-          pytest -v --cleaned_data ./data/cleaned_census.csv --test_data ./data/test_cleaned_census.csv --model_artifacts ./model
+          python -m pytest -v --cleaned_data ./data/cleaned_census.csv --test_data ./data/test_cleaned_census.csv --model_artifacts ./model
       - name: cml run
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
