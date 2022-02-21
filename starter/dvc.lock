@@ -20,11 +20,11 @@ stages:
       md5: f129ea4baab4c8054d3db03021e58a40
       size: 2766342
     - path: ml/data.py
-      md5: 6d81e5070a4dd51984fcc11b23bdbc55
-      size: 6975
+      md5: 9f8d36c2d8090a820a6ffac08b81a790
+      size: 6192
     - path: ml/model.py
-      md5: 9c977b6f756c121cf2947e1de69435f1
-      size: 4106
+      md5: 2d46ad7fb3bc835e57c87c40df1e0f11
+      size: 4813
     - path: train_model.py
       md5: 4cd87a42108e7b4ae30e2cf093fb0b99
       size: 2465
@@ -54,10 +54,10 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: b2b062f4504ae9af0b7948767f3945ea
-      size: 1879676
+      md5: 08a9280751c6e2d6728fe50d514a150b
+      size: 2018777
     - path: model/score.json
-      md5: 90140f14daa25309b0fb8c37c5ef8c92
+      md5: f32055ba4adc77c65e33a7abdd319ad4
       size: 126
   segregate_data:
     cmd: python segregate.py
@@ -110,14 +110,14 @@ stages:
       md5: 039a3d9286c197ca12ae60f4c3b9fe14
       size: 692131
     - path: evaluate.py
-      md5: d3027239d026d54ccadf2063d144d55b
-      size: 1890
+      md5: ccdda597272d2f48a8d05d909529cf89
+      size: 1416
     - path: ml/data.py
-      md5: 6d81e5070a4dd51984fcc11b23bdbc55
-      size: 6975
+      md5: 9f8d36c2d8090a820a6ffac08b81a790
+      size: 6192
     - path: ml/model.py
-      md5: 9c977b6f756c121cf2947e1de69435f1
-      size: 4106
+      md5: 2d46ad7fb3bc835e57c87c40df1e0f11
+      size: 4813
     - path: model/encoder.pkl
       md5: 3be1525f3ae2867d060ecc4bc1f39075
       size: 3040
@@ -125,5 +125,5 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: b2b062f4504ae9af0b7948767f3945ea
-      size: 1879676
+      md5: 08a9280751c6e2d6728fe50d514a150b
+      size: 2018777
