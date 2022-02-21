@@ -13,6 +13,13 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
+# preprocessing types in process_data
+process_type = [
+    'train',
+    'val_test',
+    'inference'
+]
+
 # used columns in model training
 cat_features = [
 #    "workclass",
@@ -33,32 +40,6 @@ num_features = [
     "hours-per-week",
 ]
 target = "salary"
-
-# test data for inferencing
-inference_test_data = {
-#            "workclass": ['Private', 'Self-emp-not-inc', 'Local-gov'],
-#            "education": ["HS-grad","Some-college","Bachelors"],
-            "marital-status": ['Never-married', 'Married-civ-spouse', 'Divorced'],
-            "occupation": ["Sales","Tech-support","Priv-house-serv"],
-            "relationship": ["Not-in-family","Husband","Other-relative"],
-            "race": ["Black","Asian-Pac-Islander","White"],
-            "sex": ["Male","Female","Male"],
-            "native-country": ["United-States","Nicaragua","Honduras"],
-            "age": [44,36,26],
-            "fnlgt": ["80000","160000","40000"],
-            "education-num": ['9', '2', '12'],
-            "capital-gain": [5000,500,0],
-            "capital-loss": [0,0,0],
-            "hours-per-week": ["25", "60","40"],
-}
-
-# preprocessing types in process_data
-process_type = [
-    'train',
-    'val_test',
-    'inference'
-]
-
 
 def save_model_artifacts(file_dir, model, encoder, lb, score):
     '''
@@ -156,10 +137,11 @@ def process_data(dataset, process_type='train', encoder=None, lb=None):
         Trained LabelBinarizer if training is True, otherwise returns the binarizer
         passed in.
     """
-    assert(dataset.shape[0] > 1)
+
+    logger.info(f"Preprocessing dataset size: {dataset.shape} wiht dataset features: {dataset.columns}")
+    logger.info(f"cat_features: {cat_features} num_features{num_features}")
+    assert(dataset.shape[0] > 0)
     assert(set(dataset[cat_features+num_features]).issubset(set(dataset)))
-    
-    logger.info(f"Preprocessing dataset size: {dataset.shape} wiht festures: {cat_features+num_features}")
 
     if (process_type != 'inference'):
         # training/validation/test

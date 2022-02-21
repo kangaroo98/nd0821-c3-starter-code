@@ -6,11 +6,8 @@ Date: February 2022
 import pandas as pd
 import numpy as np
 
-
 from ml.data import load_model_artifacts
-from ml.data import inference_test_data
 from ml.model import validate_model
-from ml.model import inference
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -43,20 +40,13 @@ def evaluate(model, encoder, lb, score, X):
 if __name__ == "__main__":
 
     try:
-
         # load model artifacts
-        model, encoder, lb, score = load_model_artifacts("/Users/Oliver/Development/nd0821-c3-starter-code/starter/model")
-        X = pd.read_csv("/Users/Oliver/Development/nd0821-c3-starter-code/starter/data/test_cleaned_census.csv")
+        model, encoder, lb, score = load_model_artifacts("./model")
+        X = pd.read_csv("./data/test_cleaned_census.csv")
         logger.info(f"Test dataset ({X.shape})")
 
         # model evaluation 
         evaluate(model, encoder, lb, score, X)
-
-        # model inference test - inference_test_data define in data.py
-        test_df = pd.DataFrame(inference_test_data)
-        logger.info(f"Predict test data: {test_df}")
-        test_preds = inference(model, encoder, lb, test_df)
-        logger.info(f"Test prediction: {test_preds}")
 
     except (Exception) as error:
         print("main error: %s", error)

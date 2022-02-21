@@ -9,12 +9,13 @@ import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 from ml.data import process_data
-from ml.data import inference_test_data
+from inference import inference_test_data
 from evaluate import validate_model
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
 
 
 def test_column_presence(data):
