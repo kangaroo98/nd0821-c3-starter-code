@@ -23,8 +23,8 @@ stages:
       md5: 9f8d36c2d8090a820a6ffac08b81a790
       size: 6192
     - path: ml/model.py
-      md5: 2d46ad7fb3bc835e57c87c40df1e0f11
-      size: 4813
+      md5: 29d60e466a4553eaf874b7e657528a1b
+      size: 4821
     - path: train_model.py
       md5: 4cd87a42108e7b4ae30e2cf093fb0b99
       size: 2465
@@ -48,16 +48,16 @@ stages:
         train_model.test_size: 0.2
     outs:
     - path: model/encoder.pkl
-      md5: 3be1525f3ae2867d060ecc4bc1f39075
-      size: 3040
+      md5: 973747872699c1b3f22fecb6749b5134
+      size: 3015
     - path: model/lb.pkl
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: 08a9280751c6e2d6728fe50d514a150b
-      size: 2018777
+      md5: 814ec77cc76d5dd9d8664b676fc1e64e
+      size: 2014601
     - path: model/score.json
-      md5: f32055ba4adc77c65e33a7abdd319ad4
+      md5: dbf2fcfc58f3fc220cba17dcb950f621
       size: 126
   segregate_data:
     cmd: python segregate.py
@@ -116,14 +116,14 @@ stages:
       md5: 9f8d36c2d8090a820a6ffac08b81a790
       size: 6192
     - path: ml/model.py
-      md5: 2d46ad7fb3bc835e57c87c40df1e0f11
-      size: 4813
+      md5: 29d60e466a4553eaf874b7e657528a1b
+      size: 4821
     - path: model/encoder.pkl
-      md5: 3be1525f3ae2867d060ecc4bc1f39075
-      size: 3040
+      md5: 973747872699c1b3f22fecb6749b5134
+      size: 3015
     - path: model/lb.pkl
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: 08a9280751c6e2d6728fe50d514a150b
-      size: 2018777
+      md5: 814ec77cc76d5dd9d8664b676fc1e64e
+      size: 2014601
