@@ -45,3 +45,5 @@ stages:
       - model/model.pkl
       - model/encoder.pkl
       - model/lb.pkl
+    outs:
+      - model/slice_output.txt

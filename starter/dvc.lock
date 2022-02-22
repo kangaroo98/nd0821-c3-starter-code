@@ -110,8 +110,8 @@ stages:
       md5: 039a3d9286c197ca12ae60f4c3b9fe14
       size: 692131
     - path: evaluate.py
-      md5: ccdda597272d2f48a8d05d909529cf89
-      size: 1416
+      md5: 96819d85257ef40b24bd3e35ff2ecf84
+      size: 3194
     - path: ml/data.py
       md5: 9f8d36c2d8090a820a6ffac08b81a790
       size: 6192
@@ -127,3 +127,7 @@ stages:
     - path: model/model.pkl
       md5: 814ec77cc76d5dd9d8664b676fc1e64e
       size: 2014601
+    outs:
+    - path: model/slice_output.txt
+      md5: 833aee207675b20ad910c7f77d19476d
+      size: 2106
