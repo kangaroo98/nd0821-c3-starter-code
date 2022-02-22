@@ -30,7 +30,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           dvc pull
-          dvc repro starter/dvc.yaml
+          dvc repro ./dvc.yaml
           python -m pytest -v --cleaned_data ./data/cleaned_census.csv --test_data ./data/test_cleaned_census.csv --model_artifacts ./model
       - name: cml run
         env:
@@ -38,5 +38,5 @@ jobs:
         run: |
           git fetch -p 
           dvc metrics diff --show-md master > report.md
-          # cml-publish starter/screenshots/test.png >> report.md
+          # cml-publish ./screenshots/test.png >> report.md
           cml-send-comment report.md
