@@ -13,8 +13,8 @@ from sklearn.ensemble import RandomForestClassifier
 import yaml
 from yaml import CLoader as Loader
 
-from ml.data import process_data
-from ml.data import load_model_artifacts
+from .data import process_data
+from .data import load_model_artifacts
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -155,7 +155,7 @@ def inference_current_model(data):
     logger.info(f"Dataframe size {df.shape} and its columns: {df.columns} and data: {df}")
     
     # load model artifacts
-    model, encoder, lb, _ = load_model_artifacts("./starter/model")
+    model, encoder, lb, _ = load_model_artifacts("./model")
     test_preds = inference(model, encoder, lb, df)
 
     return test_preds 

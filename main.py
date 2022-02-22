@@ -50,7 +50,9 @@ class SalaryReq(BaseModel):
         schema_extra = {
             "example": {
                 "age": 47,
+                #"workclass": 'Private',
                 "fnlgt":294913,
+                #"education": 'HS-grad',
                 "education_num":15,
                 "marital_status": "Married-civ-spouse",
                 "occupation": "Exec-managerial",
