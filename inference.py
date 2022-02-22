@@ -53,7 +53,7 @@ if __name__ == "__main__":
     try:
 
         # model inference test - inference_test_data defined in data.py
-        model, encoder, lb, _ = load_model_artifacts("./model")
+        model, encoder, lb, _ = load_model_artifacts("./../model")
         test_df = pd.DataFrame(inference_test_data)
         logger.info(f"Predict test data: {test_df}")
         test_preds = inference(model, encoder, lb, test_df)

@@ -8,9 +8,9 @@ import pytest
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
-from app.ml.data import process_data
-from app.inference import inference_test_data
-from app.evaluate import validate_model
+from ml.data import process_data
+from inference import inference_test_data
+from evaluate import validate_model
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")

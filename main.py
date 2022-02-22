@@ -64,7 +64,7 @@ class SalaryReq(BaseModel):
             }
         }
 
-from app.ml.model import inference_current_model
+from ml.model import inference_current_model
 
 # Instantiate the app.
 app = FastAPI()
