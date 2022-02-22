@@ -5,9 +5,6 @@ Date: February 2022
 # Add the necessary imports for the starter code.
 from dataclasses import dataclass
 import pandas as pd
-import numpy as np
-import json
-import requests
 
 from ml.data import load_model_artifacts
 from ml.model import inference_current_model

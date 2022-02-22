@@ -8,7 +8,7 @@ Date: February 2022
 import pytest
 import pandas as pd
 
-from ml.data import load_model_artifacts
+from app.ml.data import load_model_artifacts
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")

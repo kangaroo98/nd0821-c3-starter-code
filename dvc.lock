@@ -1,9 +1,9 @@
 schema: '2.0'
 stages:
   clean_data:
-    cmd: python clean_data.py
+    cmd: python app/clean_data.py
     deps:
-    - path: clean_data.py
+    - path: app/clean_data.py
       md5: bf7ef17656ba4f902cdfee598cb89c32
       size: 1807
     - path: data/census.csv
@@ -14,20 +14,20 @@ stages:
       md5: e6a84d6d980bd406a0cc3cb1edf59300
       size: 3458318
   train_model:
-    cmd: python train_model.py
+    cmd: python app/train_model.py
     deps:
+    - path: app/ml/data.py
+      md5: 167e7b77bd8d9c2a11c62ee9c5b631c8
+      size: 6193
+    - path: app/ml/model.py
+      md5: debd8175ec6f4d9a4e2e2b81a40c1aee
+      size: 4809
+    - path: app/train_model.py
+      md5: 4cd87a42108e7b4ae30e2cf093fb0b99
+      size: 2465
     - path: data/train_cleaned_census.csv
       md5: f129ea4baab4c8054d3db03021e58a40
       size: 2766342
-    - path: ml/data.py
-      md5: 2f53c57d10e14496ecea178a321840ef
-      size: 6204
-    - path: ml/model.py
-      md5: 29d60e466a4553eaf874b7e657528a1b
-      size: 4821
-    - path: train_model.py
-      md5: 4cd87a42108e7b4ae30e2cf093fb0b99
-      size: 2465
     params:
       params.yaml:
         train_model.param_grid:
@@ -54,20 +54,20 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: e14a79fff2f17ec0b2693f9e22171b64
-      size: 2018921
+      md5: 6fd06edfae6f0f7a2de1df5d540fc35f
+      size: 1998473
     - path: model/score.json
-      md5: 04aa192f3f082eea7635727da34592b1
+      md5: b289b4abb3018cc89fa00fcf9a97176f
       size: 126
   segregate_data:
-    cmd: python segregate.py
+    cmd: python app/segregate.py
     deps:
+    - path: app/segregate.py
+      md5: 75856659dcb1a1159e33e23474535ff9
+      size: 2018
     - path: data/cleaned_census.csv
       md5: e6a84d6d980bd406a0cc3cb1edf59300
       size: 3458318
-    - path: segregate.py
-      md5: 75856659dcb1a1159e33e23474535ff9
-      size: 2018
     params:
       params.yaml:
         segregate_data.random_state: 42
@@ -104,20 +104,20 @@ stages:
       md5: ff3320807d84a247ab4b5bb5e871cf1c
       size: 2743
   evaluate:
-    cmd: python evaluate.py
+    cmd: python app/evaluate.py
     deps:
+    - path: app/evaluate.py
+      md5: 96819d85257ef40b24bd3e35ff2ecf84
+      size: 3194
+    - path: app/ml/data.py
+      md5: 167e7b77bd8d9c2a11c62ee9c5b631c8
+      size: 6193
+    - path: app/ml/model.py
+      md5: debd8175ec6f4d9a4e2e2b81a40c1aee
+      size: 4809
     - path: data/test_cleaned_census.csv
       md5: 039a3d9286c197ca12ae60f4c3b9fe14
       size: 692131
-    - path: evaluate.py
-      md5: 96819d85257ef40b24bd3e35ff2ecf84
-      size: 3194
-    - path: ml/data.py
-      md5: 2f53c57d10e14496ecea178a321840ef
-      size: 6204
-    - path: ml/model.py
-      md5: 29d60e466a4553eaf874b7e657528a1b
-      size: 4821
     - path: model/encoder.pkl
       md5: 3be1525f3ae2867d060ecc4bc1f39075
       size: 3040
@@ -125,9 +125,9 @@ stages:
       md5: 68d67643c2f11e180eaa335146ade2ea
       size: 403
     - path: model/model.pkl
-      md5: e14a79fff2f17ec0b2693f9e22171b64
-      size: 2018921
+      md5: 6fd06edfae6f0f7a2de1df5d540fc35f
+      size: 1998473
     outs:
     - path: model/slice_output.txt
-      md5: cc63ee4f1428e0e3cb2dd0ac594b24f0
-      size: 1990
+      md5: c524f1d8eb900a384e08436ae09b7600
+      size: 2047
