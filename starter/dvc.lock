@@ -127,3 +127,7 @@ stages:
     - path: model/model.pkl
       md5: 814ec77cc76d5dd9d8664b676fc1e64e
       size: 2014601
+    outs:
+    - path: model/slice_output.txt
+      md5: 833aee207675b20ad910c7f77d19476d
+      size: 2106
