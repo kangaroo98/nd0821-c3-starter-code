@@ -1,1 +1,1 @@
-web: uvicorn --app-dir ./starter main:app
+web: uvicorn main:app
