@@ -7,4 +7,5 @@ requests
 fastapi==0.63.0
 uvicorn
 gunicorn
+matplotlib
 dvc[s3]

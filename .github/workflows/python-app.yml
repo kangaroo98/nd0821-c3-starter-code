@@ -3,22 +3,17 @@
 
 name: Python application
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: "3.8"
+      - uses: iterative/setup-cml@v1
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -29,11 +24,19 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
+      - name: Run pipeline and test
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           dvc pull
           dvc repro starter/dvc.yaml
-          pytest -v --raw_data starter/data/cleaned_census.csv
+          python -m pytest -v --cleaned_data starter/data/cleaned_census.csv --test_data starter/data/test_cleaned_census.csv --model_artifacts starter/model
+      - name: cml run
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch -p 
+          dvc metrics diff --show-md master > report.md
+          cml-publish starter/screenshots/test.png >> report.md
+          cml-send-comment report.md
