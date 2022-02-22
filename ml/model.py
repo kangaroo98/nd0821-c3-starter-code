@@ -155,7 +155,7 @@ def inference_current_model(data):
     logger.info(f"Dataframe size {df.shape} and its columns: {df.columns} and data: {df}")
     
     # load model artifacts
-    model, encoder, lb, _ = load_model_artifacts("./starter/model")
+    model, encoder, lb, _ = load_model_artifacts("./model")
     test_preds = inference(model, encoder, lb, df)
 
     return test_preds 
