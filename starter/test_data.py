@@ -165,3 +165,7 @@ def test_model_score(test_data, model_artifacts):
 
     if not ((test_score["precision"] > range_min) and (test_score["precision"] < range_max)):
         assert False
+
+def test_data_shape(data):
+    """ If your data is assumed to have no null values then this is a valid test. """
+    assert data.shape == data.dropna().shape, "Dropping null changes shape."
