@@ -20,7 +20,7 @@ This model should be used to predict the salary as a target based on a handful o
 
 ## Training Data
 
-The original data was obtained from uci and is cleaned by running clean_data.py (spaces remove, duplicates dropped, unkonwn countries removed). The cleaned data is stored in data/cleaned_census.csv.
+The original data was obtained from uci and is cleaned by running clean_data.py (spaces removed, duplicates dropped, unkonwn countries removed). The cleaned data is stored in data/cleaned_census.csv.
 The cleaned data is then split in a training and test dataset (20%). This can be configured in params.yaml. The training data is again split into two parts (training, validation dataset). The current validation size is 20% and could be configured in params.yaml as well.
 
 ## Evaluation Data
@@ -29,8 +29,8 @@ The model was evaluated by applying the test data with a confirmation of the tra
 
 ## Metrics
 
-The model was evaluated having a precision of 0.82 with the validation set and 0,82 with test data.
-Other scores are available and stored as model metrics (./model/score.json). In addition the slicing data is stored in /model/slice_output.txt as requested.
+The model was evaluated having a precision of 0.82, a recall of 0.52 and a fbeta 0.64. The result was validated with the test dataset and confirmed the model metrics with a precision of 0.82, a recall of 0.55 and a fbeta 0.66.
+The scores are available and stored as model metrics (./model/score.json). In addition the slicing data is stored in /model/slice_output.txt as requested.
 
 ## Ethical Considerations
 
